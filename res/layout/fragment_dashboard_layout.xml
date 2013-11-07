@@ -1,0 +1,22 @@
+<com.analizate.main.DashboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:background="#eee" >
+
+	<!--  Ver Doctores -->
+
+    <Button
+        android:id="@+id/btnDoctors"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/btn_viewlist"
+        android:text="Medicos" />
+	
+    <!--  Ver Hospitales -->
+    <Button
+        android:id="@+id/btnHospitals"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/btn_new_transaction"
+        android:text="Hospitales" />
+    
+</com.analizate.main.DashboardLayout>
