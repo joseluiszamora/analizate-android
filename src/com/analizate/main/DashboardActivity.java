@@ -14,7 +14,7 @@ public class DashboardActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dashboard);
 		
-		// declare buttons 
+		/*// declare buttons 
 		final Button btnDoctors = (Button)findViewById(R.id.btnDoctors);
 		final Button btnHospitals = (Button)findViewById(R.id.btnHospitals);
 		
@@ -34,7 +34,7 @@ public class DashboardActivity extends Activity{
 				Intent intent = new Intent(DashboardActivity.this, HospitalActivity.class);
 				startActivity(intent);
 			}		
-		});
+		});*/
 	}
 
 	@Override
