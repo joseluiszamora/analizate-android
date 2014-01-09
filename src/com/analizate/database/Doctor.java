@@ -3,118 +3,111 @@ package com.analizate.database;
 public class Doctor {
 	//private variables
 	int _id;
+	int _id_especialty;
 	String _name;
-	String _espec;
-	String _desc;
-	String _image;
+	String _mail;
 	String _phone;
 	String _cellphone;
-	String _email;
+	String _address;
+	String _obs;
+	String _image;
 	
-	// Empty constructor
+  	//Empty constructor
 	public Doctor(){
 	}
-	
-	// constructor
-	public Doctor(int id, String name, String espec, String desc, String image, String phone, String cellphone, String email){
+  // constructor
+	public Doctor(int id, int id_especialty, String name, String mail, String phone, String cellphone, String address, String obs, String image){
 		this._id = id;
+		this._id_especialty = id_especialty;
 		this._name = name;
-		this._espec = espec;
-		this._desc = desc;
-		this._image = image;
+		this._mail = mail;
 		this._phone = phone;
 		this._cellphone = cellphone;
-		this._email = email;
-	}
-	
-	// constructor
-	public Doctor(String name, String espec, String desc, String image, String phone, String cellphone, String email){
-		this._name = name;
-		this._espec = espec;
-		this._desc = desc;
+		this._address = address;
+		this._obs = obs;
 		this._image = image;
-		this._phone = phone;
-		this._cellphone = cellphone;
-		this._email = email;
 	}
-	
-	// getting ID
-		public int getID(){
-			return this._id;
-		}
-		
-		// setting ID
-		public void setID(int id){
-			this._id = id;
-		}
-		
-		// getting Nombre
-		public String getName(){
-			return this._name;
-		}
-		
-		// setting Nombre
-		public void setName(String name){
-			this._name = name;
-		}
-		
-		// getting Especialidades
-		public String getEspec(){
-			return this._espec;
-		}
-		
-		// setting Especialidades
-		public void setEspec(String espec){
-			this._espec = espec;
-		}
-		
-		// getting descripcion
-		public String getDesc(){
-			return this._desc;
-		}
-		
-		// setting descripcion
-		public void setDesc(String desc){
-			this._desc = desc;
-		}
-		
-		// getting imagen
-		public String getImage(){
-			return this._image;
-		}
-		
-		// setting imagen
-		public void setImage(String image){
-			this._image = image;
-		}
-		
-		// getting phone
-		public String getPhone(){
-			return this._phone;
-		}
-		
-		// setting phone
-		public void setPhone(String phone){
-			this._phone = phone;
-		}
-
-		// getting cellphone
-		public String getCellphone(){
-			return this._cellphone;
-		}
-		
-		// setting cellphone
-		public void setCellphone(String cellphone){
-			this._cellphone = cellphone;
-		}
-		
-		// getting email
-		public String getEmail(){
-			return this._email;
-		}
-		
-		// setting email
-		public void setEmail(String email){
-			this._email = email;
-		}
+  // constructor
+  public Doctor(int id_especialty, String name, String mail, String phone, String cellphone, String address, String obs, String image){
+    this._id_especialty = id_especialty;
+    this._name = name;
+    this._mail = mail;
+    this._phone = phone;
+    this._cellphone = cellphone;
+    this._address = address;
+    this._obs = obs;
+    this._image = image;
+  }
+  // getting ID
+  public int getID(){
+    return this._id;
+  }
+  // setting ID
+  public void setID(int id){
+    this._id = id;
+  }
+  // getting ID_especiality
+  public int getIdEspeciality(){
+    return this._id_especialty;
+  }
+  // setting ID_especiality
+  public void setIdEspeciality(int id_especiality){
+    this._id_especialty = id_especiality;
+  } 
+  // getting name
+  public String getName(){
+    return this._name;
+  }
+  // setting name
+  public void setName(String name){
+    this._name = name;
+  }
+  // getting mail
+  public String getMail(){
+    return this._mail;
+  }
+  // setting mail
+  public void setMail(String mail){
+    this._mail = mail;
+  }
+  // getting phone
+  public String getPhone(){
+    return this._phone;
+  }
+  // setting phone
+  public void setPhone(String phone){
+    this._phone = phone;
+  }
+  // getting cellphone
+  public String getCellPhone(){
+    return this._cellphone;
+  }
+  // setting cellphone
+  public void setCellPhone(String cellphone){
+    this._cellphone = cellphone;
+  }
+  // getting address
+  public String getAddress(){
+    return this._address;
+  }
+  // setting address
+  public void setAddress(String address){
+    this._address = address;
+  }
+  // getting obs
+  public String getObs(){
+    return this._obs;
+  }
+  // setting obs
+  public void setObs(String obs){
+    this._obs = obs;
+  }
+  // getting image
+  public String getImage(){
+    return this._image;
+  }
+  // setting image
+  public void setImage(String image){
+    this._image = image;
+  }
 }

@@ -4,5 +4,21 @@
     <string name="app_name">analizate</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    
+    
+    <string-array name="proyects_fields">
+        <item>Codigo</item>
+        <item>Institucion Ejecutora</item>
+        <item>Instituciones Financiadora</item>
+        <item>Clasificación del Proyecto</item>
+        <item>Director</item>
+        <item>Supervisor</item>
+        <item>Tipo de Proyecto</item>
+        <item>Sección Municipal</item>
+        <item>Coordenadas</item>
+        <item>Gestión</item>
+        <item>Fecha de Inicio</item>
+        <item>Total Financiado</item>
+    </string-array>
 
 </resources>

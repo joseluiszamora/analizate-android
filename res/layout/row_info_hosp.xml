@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_selector"
+    android:orientation="horizontal"
+    android:padding="5dip" >
+
+    <TextView
+        android:id="@+id/customer_id"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+    
+    <TextView
+        android:id="@+id/current_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/thumbnail"
+        android:layout_alignParentTop="true"
+        android:text="Rihanna Love the way lie"
+        android:textColor="#040404"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/current_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/current_title"
+        android:layout_alignBottom="@+id/current_title"
+        android:layout_marginLeft="19dp"
+        android:layout_toRightOf="@+id/current_title"
+        android:text="TextView"
+        android:textColor="#343434"
+        android:textSize="13sp" />
+
+</RelativeLayout>
