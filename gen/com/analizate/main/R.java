@@ -142,8 +142,8 @@ public final class R {
         public static final int textSearch=0x7f0a0005;
         public static final int textSearchHospitals=0x7f0a0007;
         public static final int textSpeciality=0x7f0a001a;
-        public static final int textView1=0x7f0a000b;
         public static final int textView2=0x7f0a0001;
+        public static final int textViewDialog2=0x7f0a000b;
         public static final int thumbnail=0x7f0a0016;
         public static final int txtProjectName=0x7f0a001e;
     }
@@ -165,14 +165,15 @@ public final class R {
         public static final int activity_services_info=0x7f03000e;
         public static final int child_item=0x7f03000f;
         public static final int dialog_template=0x7f030010;
-        public static final int fragment_dashboard_layout=0x7f030011;
-        public static final int group_item=0x7f030012;
-        public static final int row_doctor=0x7f030013;
-        public static final int row_hospital=0x7f030014;
-        public static final int row_info_hosp=0x7f030015;
-        public static final int row_menu=0x7f030016;
-        public static final int row_services=0x7f030017;
-        public static final int txt3=0x7f030018;
+        public static final int dialog_template2=0x7f030011;
+        public static final int fragment_dashboard_layout=0x7f030012;
+        public static final int group_item=0x7f030013;
+        public static final int row_doctor=0x7f030014;
+        public static final int row_hospital=0x7f030015;
+        public static final int row_info_hosp=0x7f030016;
+        public static final int row_menu=0x7f030017;
+        public static final int row_services=0x7f030018;
+        public static final int txt3=0x7f030019;
     }
     public static final class menu {
         public static final int account=0x7f090000;
@@ -228,13 +229,17 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f080005;
+        public static final int AppBaseTheme=0x7f080009;
         public static final int CustomDialogTheme=0x7f080003;
         public static final int DashboardButton=0x7f080001;
+        public static final int DialogBack=0x7f080007;
         public static final int FooterBar=0x7f080002;
         /**  Any customizations for your app running on pre-3.0 devices here 
          */
-        public static final int MyAppTheme=0x7f080006;
+        public static final int MyAppTheme=0x7f08000a;
         public static final int TitleBackground=0x7f080004;
+        public static final int cust_dialog=0x7f080005;
+        public static final int dialog_title_style=0x7f080006;
+        public static final int myCoolDialog=0x7f080008;
     }
 }

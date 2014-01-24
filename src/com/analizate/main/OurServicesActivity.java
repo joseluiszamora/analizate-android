@@ -217,9 +217,9 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
 		
 		
 		// custom dialog
-		final Dialog dialog = new Dialog(OurServicesActivity.this);
-		dialog.setContentView(R.layout.dialog_template);
-
+		final Dialog dialog = new Dialog(OurServicesActivity.this, R.style.cust_dialog);
+		dialog.setContentView(R.layout.dialog_template2);
+		
 	    // get this
 		Log.d("CordovaLog", "======");
 		Log.d("CordovaLog", obj_id);
@@ -237,17 +237,17 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		dialog.setTitle(name);
 		final String[] title = { "" };
   		final String[] info = { desc };
 	    
   		Integer[] imageId = { R.drawable.exit };
 	    
-  		CustomList adapter = new CustomList(OurServicesActivity.this, title,  info, imageId);
-  		ListView list = (ListView) dialog.findViewById(R.id.listinfo222);
-        list.setAdapter(adapter);
-        
-        
+  		TextView textview = (TextView) dialog.findViewById(R.id.textViewDialog2);
+  		
+  		textview.setText(Html.fromHtml(desc));
+  		
 		/*// set the custom dialog components - text, image and button
 		TextView text = (TextView) dialog.findViewById(R.id.text);
 		text.setText("Android custom dialog example!");
@@ -367,10 +367,10 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
 			//ImageView imageView = (ImageView) rowView.findViewById(R.id.list_image);
 			Log.d("CordovaLog", "------------->>>> " + position);
 			txtTitle.setText(web[position]);
-			//txtInfo.setText(infoStr[position]);
-			
-			Spanned marked_up = Html.fromHtml(infoStr[position]);
-			txtInfo.setText(marked_up.toString(),BufferType.SPANNABLE);
+			txtInfo.setText(infoStr[position]);
+
+			//Spanned marked_up = Html.fromHtml(infoStr[position]);
+			//txtInfo.setText(marked_up.toString(),BufferType.SPANNABLE);
 			
 			//imageView.setImageResource(imageId[position]);
 			return rowView;
