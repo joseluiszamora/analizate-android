@@ -4,41 +4,50 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingTop="20dp" >
+    >
 
-    <EditText
-		    android:id="@+id/textSearchHospitals"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:background="@drawable/txt"
-		    android:paddingTop="5dp"
-		    android:paddingBottom="5dp"
-		   	android:layout_marginBottom="10px"
-		    android:drawableLeft="@android:drawable/ic_menu_search"
-		    android:hint="Hospital..." >
-
-		    <requestFocus />
-		</EditText>
-		
+    <!-- Include Action Bar -->
+    <include layout="@layout/actionbar_layout"/>
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/txt"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="7dp" >
         
-        
-
-        <ListView
-            android:id="@+id/listHospitals"
+        <EditText
+            android:id="@+id/textSearchHospitals"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:divider="#b5b5b5"
-            android:dividerHeight="1dp"
-            android:listSelector="@drawable/list_selector" >
-        </ListView>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10px"
+            android:background="@drawable/txt"
+            android:drawableLeft="@android:drawable/ic_menu_search"
+            android:ems="10"
+            android:hint="Hospital..."
+            android:paddingBottom="5dp"
+             >
+
+            <requestFocus />
+        </EditText>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/txt"
+            android:orientation="vertical"
+             >
+
+            <ListView
+                android:id="@+id/listHospitals"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:divider="#b5b5b5"
+                android:dividerHeight="1dp"
+                android:listSelector="@drawable/list_selector" >
+            </ListView>
+        </LinearLayout>
 
     </LinearLayout>
-
 </LinearLayout>

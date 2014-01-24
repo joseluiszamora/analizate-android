@@ -1,5 +1,7 @@
 package com.analizate.main;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,14 +10,16 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,10 +27,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TextView.BufferType;
 import android.widget.Toast;
 
 import com.analizate.database.DatabaseHandlerService;
@@ -199,13 +205,65 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
 	
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		String custom_name = (String) ((TextView) arg1.findViewById(R.id.customer_id)).getText();
+		String obj_id = (String) ((TextView) arg1.findViewById(R.id.customer_id)).getText();
+		/*
         Intent intentNewProduct = new Intent(this, OurServicesInfoActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putString("obj_id", custom_name);		
 		intentNewProduct.putExtras(bundle);
 		startActivity(intentNewProduct);
-		finish();
+		finish();*/		
+		
+		
+		
+		// custom dialog
+		final Dialog dialog = new Dialog(OurServicesActivity.this);
+		dialog.setContentView(R.layout.dialog_template);
+
+	    // get this
+		Log.d("CordovaLog", "======");
+		Log.d("CordovaLog", obj_id);
+		
+	    Service service = db.get(obj_id);
+	    Log.d("CordovaLog", service.getName());
+	    // Define TextViews
+	    
+	    String name = "";
+	    String desc = "";
+		try {
+			name = URLDecoder.decode(service.getName(), "UTF-8");
+			desc = URLDecoder.decode(service.getDesc(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		dialog.setTitle(name);
+		final String[] title = { "" };
+  		final String[] info = { desc };
+	    
+  		Integer[] imageId = { R.drawable.exit };
+	    
+  		CustomList adapter = new CustomList(OurServicesActivity.this, title,  info, imageId);
+  		ListView list = (ListView) dialog.findViewById(R.id.listinfo222);
+        list.setAdapter(adapter);
+        
+        
+		/*// set the custom dialog components - text, image and button
+		TextView text = (TextView) dialog.findViewById(R.id.text);
+		text.setText("Android custom dialog example!");
+		ImageView image = (ImageView) dialog.findViewById(R.id.image);
+		image.setImageResource(R.drawable.ic_launcher);
+ 
+		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+		// if button is clicked, close the custom dialog
+		dialogButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});*/
+ 
+		dialog.show();
 	}
 	
     
@@ -256,11 +314,10 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
 	    private class ViewHolder {
 	        TextView customerId;
 	        TextView txtName;
-	        TextView txtAddress;
+	        //TextView txtAddress;
 	    }
 	    
 		public View getView(int position, View convertView, ViewGroup parent) {
-			  
 			ViewHolder holder = null;
 			if (convertView == null) {
 				LayoutInflater inflater = getLayoutInflater();
@@ -269,7 +326,7 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
 		        holder = new ViewHolder();
 		        holder.customerId = (TextView) convertView.findViewById(R.id.customer_id);
 		        holder.txtName = (TextView) convertView.findViewById(R.id.customerName);
-		        holder.txtAddress = (TextView) convertView.findViewById(R.id.customerAddress);
+		        //holder.txtAddress = (TextView) convertView.findViewById(R.id.customerAddress);
 		        convertView.setTag(holder);
 		     }
 		     else {
@@ -277,11 +334,47 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
 		     }
 			
 			Service rowItem = (Service) getItem(position);
-	      holder.customerId.setText(String.valueOf(rowItem.getID()));
-	      holder.txtName.setText(rowItem.getName());
-	      holder.txtAddress.setText(""); 
+		      holder.customerId.setText(String.valueOf(rowItem.getID()));
+		      holder.txtName.setText(rowItem.getName());
+		      //holder.txtAddress.setText(""); 
 			
 			return convertView;
 		  }
 	}
+
+
+
+	public class CustomList extends ArrayAdapter<String>{
+		private final Activity context;
+		private final String[] web;
+		private final String[] infoStr;
+		private final Integer[] imageId;
+		public CustomList(Activity context, String[] web, String[] info, Integer[] imageId) {
+			super(context, R.layout.row_info_hosp, web);
+			this.context = context;
+			this.web = web;
+			this.infoStr = info;
+			this.imageId = imageId;
+		}
+		@Override
+		public View getView(int position, View view, ViewGroup parent) {
+			LayoutInflater inflater = context.getLayoutInflater();
+			View rowView= inflater.inflate(R.layout.row_info_hosp, null, true);
+			TextView txtTitle = (TextView) rowView.findViewById(R.id.current_title);
+			
+			TextView txtInfo = (TextView) rowView.findViewById(R.id.current_desc);
+			
+			//ImageView imageView = (ImageView) rowView.findViewById(R.id.list_image);
+			Log.d("CordovaLog", "------------->>>> " + position);
+			txtTitle.setText(web[position]);
+			//txtInfo.setText(infoStr[position]);
+			
+			Spanned marked_up = Html.fromHtml(infoStr[position]);
+			txtInfo.setText(marked_up.toString(),BufferType.SPANNABLE);
+			
+			//imageView.setImageResource(imageId[position]);
+			return rowView;
+		}
+	}
+
 }

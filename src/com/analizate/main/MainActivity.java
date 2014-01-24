@@ -12,6 +12,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.analizate.database.DatabaseHandlerDoctor;
+import com.analizate.database.DatabaseHandlerInstitution;
+import com.analizate.database.DatabaseHandlerService;
+import com.analizate.database.DatabaseHandlerSpecialty;
+
 public class MainActivity extends Activity {
 	// Splash screen timer
 	private static int SPLASH_TIME_OUT = 2500;
@@ -32,6 +37,14 @@ public class MainActivity extends Activity {
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
+				DatabaseHandlerInstitution db = new DatabaseHandlerInstitution(MainActivity.this, "", null, '1');
+				db.setTable();
+				DatabaseHandlerDoctor db2 = new DatabaseHandlerDoctor(MainActivity.this, "", null, '1');
+				db2.setTable();
+				DatabaseHandlerService db3 = new DatabaseHandlerService(MainActivity.this, "", null, '1');
+				db3.setTable();
+				DatabaseHandlerSpecialty db4 = new DatabaseHandlerSpecialty(MainActivity.this, "", null, '1');
+				db4.setTable();
 				// This method will be executed once the timer is over
 				// Start your app main activity
 				Intent i = new Intent(MainActivity.this, DashboardActivity.class);

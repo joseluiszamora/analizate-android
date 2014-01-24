@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.util.Log;
 
 public class DatabaseHandlerDoctor extends SQLiteOpenHelper {
 	// All Static variables
@@ -22,6 +23,7 @@ public class DatabaseHandlerDoctor extends SQLiteOpenHelper {
 	// Contacts Table Columns names
 	private static final String KEY_ID = "id";
 	private static final String KEY_ID_ESPECIALTY = "id_especialty";
+	private static final String KEY_SPECIALTY_NAME = "specialtyname";
 	private static final String KEY_NAME = "name";
 	private static final String KEY_MAIL = "mail";
 	private static final String KEY_PHONE = "phone";
@@ -36,8 +38,8 @@ public class DatabaseHandlerDoctor extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
-			+ KEY_ID + " INTEGER PRIMARY KEY," + KEY_ID_ESPECIALTY + " INTEGER," + KEY_NAME + " TEXT," + KEY_MAIL + " TEXT," 
+		String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+			+ KEY_ID + " INTEGER PRIMARY KEY," + KEY_ID_ESPECIALTY + " INTEGER," + KEY_SPECIALTY_NAME + " TEXT," + KEY_NAME + " TEXT," + KEY_MAIL + " TEXT," 
 				+ KEY_PHONE + " TEXT," + KEY_CELL_PHONE + " TEXT," + KEY_ADDRESS + " TEXT," + KEY_OBS + " TEXT," + KEY_IMAGE + " TEXT" + ")";
 		db.execSQL(CREATE_TABLE);
 	}
@@ -56,11 +58,20 @@ public class DatabaseHandlerDoctor extends SQLiteOpenHelper {
 		// Create tables again
 		onCreate(db);
 	}
+	public void setTable() {
+		SQLiteDatabase db = this.getReadableDatabase();
+		onCreate(db);
+	}
 	// Adding new product
 	public void add(Doctor doctor) {
+		Log.d("CordovaLog", "ADDDDDDDDDDDDDDDDDDDDDDDDDDD STARTTTTTT");
+		Log.d("CordovaLog", doctor.getName());
+		Log.d("CordovaLog", doctor.getImage());
+		Log.d("CordovaLog", "ADDDDDDDDDDDDDDDDDDDDDDDDDDD FINISHHHH");
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(KEY_ID_ESPECIALTY, doctor.getIdEspeciality());
+		values.put(KEY_SPECIALTY_NAME, doctor.getSpecialtyName());
 		values.put(KEY_NAME, doctor.getName());
 		values.put(KEY_MAIL, doctor.getMail());
 		values.put(KEY_PHONE, doctor.getPhone());
@@ -68,6 +79,7 @@ public class DatabaseHandlerDoctor extends SQLiteOpenHelper {
 		values.put(KEY_ADDRESS, doctor.getAddress());
 		values.put(KEY_OBS, doctor.getObs());
 		values.put(KEY_IMAGE, doctor.getImage());
+		
 		// Inserting Row
 		db.insert(TABLE_NAME, null, values);
 		db.close(); // Closing database connection
@@ -77,15 +89,13 @@ public class DatabaseHandlerDoctor extends SQLiteOpenHelper {
 	public Doctor get(String id) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.query(TABLE_NAME, new String[] { KEY_ID, KEY_ID_ESPECIALTY,
-				KEY_NAME, KEY_MAIL, KEY_PHONE, KEY_CELL_PHONE, KEY_ADDRESS, KEY_OBS, KEY_IMAGE }, KEY_ID + "=?",
+				KEY_SPECIALTY_NAME, KEY_NAME, KEY_MAIL, KEY_PHONE, KEY_CELL_PHONE, KEY_ADDRESS, KEY_OBS, KEY_IMAGE }, KEY_ID + "=?",
 				new String[] { id }, null, null, null, null);
 		if (cursor != null && cursor.moveToFirst()){
 			Doctor doctor = new Doctor(Integer.parseInt(cursor.getString(0)), Integer.parseInt(cursor.getString(1)), cursor.getString(2), 
-					cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8));
+					cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9));
 			return doctor;
-		}else{
-			return null;
-		}							
+		}else{ return null; }
 	}
 	
 	// Getting All
@@ -101,13 +111,14 @@ public class DatabaseHandlerDoctor extends SQLiteOpenHelper {
 				Doctor doctor = new Doctor();
 				doctor.setID(Integer.parseInt(cursor.getString(0)));
 				doctor.setIdEspeciality(Integer.parseInt(cursor.getString(1)));
-				doctor.setName(cursor.getString(2));
-				doctor.setMail(cursor.getString(3));
-				doctor.setPhone(cursor.getString(4));
-				doctor.setCellPhone(cursor.getString(5));
-				doctor.setAddress(cursor.getString(6));
-				doctor.setObs(cursor.getString(7));
-				doctor.setImage(cursor.getString(8));
+				doctor.setSpecialtyName(cursor.getString(2));
+				doctor.setName(cursor.getString(3));
+				doctor.setMail(cursor.getString(4));
+				doctor.setPhone(cursor.getString(5));
+				doctor.setCellPhone(cursor.getString(6));
+				doctor.setAddress(cursor.getString(7));
+				doctor.setObs(cursor.getString(8));
+				//doctor.setImage(cursor.getString(9));
 				// Adding contact to list
 				list.add(doctor);
 			} while (cursor.moveToNext());
@@ -138,7 +149,7 @@ public class DatabaseHandlerDoctor extends SQLiteOpenHelper {
 		List<Doctor> list = new ArrayList<Doctor>();
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.query(TABLE_NAME, new String[] { KEY_ID, KEY_ID_ESPECIALTY,
-				KEY_NAME, KEY_MAIL, KEY_PHONE, KEY_CELL_PHONE, KEY_ADDRESS, KEY_OBS, KEY_IMAGE }, 
+				KEY_SPECIALTY_NAME, KEY_NAME, KEY_MAIL, KEY_PHONE, KEY_CELL_PHONE, KEY_ADDRESS, KEY_OBS, KEY_IMAGE }, 
 				KEY_NAME + " LIKE '%"+like +"%'", null, null, null, KEY_NAME);
 		// looping through all rows and adding to list
 		if (cursor.moveToFirst()) {
@@ -146,13 +157,14 @@ public class DatabaseHandlerDoctor extends SQLiteOpenHelper {
 				Doctor doctor = new Doctor();
 				doctor.setID(Integer.parseInt(cursor.getString(0)));
 				doctor.setIdEspeciality(Integer.parseInt(cursor.getString(1)));
-				doctor.setName(cursor.getString(2));
-				doctor.setMail(cursor.getString(3));
-				doctor.setPhone(cursor.getString(4));
-				doctor.setCellPhone(cursor.getString(5));
-				doctor.setAddress(cursor.getString(6));
-				doctor.setObs(cursor.getString(7));
-				doctor.setImage(cursor.getString(8));
+				doctor.setSpecialtyName(cursor.getString(2));
+				doctor.setName(cursor.getString(3));
+				doctor.setMail(cursor.getString(4));
+				doctor.setPhone(cursor.getString(5));
+				doctor.setCellPhone(cursor.getString(6));
+				doctor.setAddress(cursor.getString(7));
+				doctor.setObs(cursor.getString(8));
+				//doctor.setImage(cursor.getString(9));
 				// Adding contact to list
 				list.add(doctor);
 			} while (cursor.moveToNext());

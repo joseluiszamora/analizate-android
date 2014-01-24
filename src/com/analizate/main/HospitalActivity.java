@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,6 +39,8 @@ import android.widget.Toast;
 
 import com.analizate.database.DatabaseHandlerInstitution;
 import com.analizate.database.Institution;
+import com.analizate.database.Service;
+import com.analizate.main.OurServicesActivity.CustomList;
 import com.analizate.webservice.InternetDetector;
 import com.analizate.webservice.JSONParser;
 
@@ -72,6 +76,8 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_hospital);
 		
+		Log.d("CordovaLog", "dddddddddddd");
+		
 	   listView = (ListView) findViewById(R.id.listHospitals);
 	   edittext = (EditText) findViewById(R.id.textSearchHospitals);
 	   db = new DatabaseHandlerInstitution(this, "", null, '1');
@@ -87,7 +93,7 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			UpdateInfoAsyncDialog updateWork = new UpdateInfoAsyncDialog();
 			updateWork.execute();
         }else{
-			Toast toast = Toast.makeText(HospitalActivity.this, "Conexi�n de datos no disponible", Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(HospitalActivity.this, "Conexión de datos no disponible", Toast.LENGTH_SHORT);
 			toast.show();
         }
 		
@@ -132,14 +138,57 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Log.d("log_tag", "Clicking");
 		String obj_id = (String) ((TextView) arg1.findViewById(R.id.customer_id)).getText();
-		Log.d("log_tag", obj_id);
-        Intent intentNewProduct = new Intent(this, HospitalInfoActivity.class);
+		
+        /*Intent intentNewProduct = new Intent(this, HospitalInfoActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putString("obj_id", obj_id);
 		intentNewProduct.putExtras(bundle);
-		startActivity(intentNewProduct);
+		startActivity(intentNewProduct);*/
+		
+		// custom dialog
+		final Dialog dialog = new Dialog(HospitalActivity.this);
+		dialog.setContentView(R.layout.dialog_template);
+
+	    // get this
+		Log.d("CordovaLog", "======");
+		Log.d("CordovaLog", obj_id);
+		
+		Institution institution = db.get(obj_id);
+	    dialog.setTitle(institution.getName());
+	    
+	    final String[] title = {
+		    "Dirección",
+		    "Telefono",
+		    "Mail",
+		    "Web",
+		    "Desc",
+		    "Imagen"
+		};
+
+  		final String[] info = {
+	        institution.getAddress(),
+	        institution.getPhone(),
+	        institution.getMail(),
+	        institution.getWeb(),
+	        institution.getDesc(),
+	        institution.getImage()
+	    };
+  	  	  
+	    Integer[] imageId = {
+	            R.drawable.exit,
+	            R.drawable.exit,
+	            R.drawable.exit,
+	            R.drawable.exit,
+	            R.drawable.exit,
+	            R.drawable.exit
+	    };
+	    
+  		CustomList adapter = new CustomList(HospitalActivity.this, title,  info, imageId);
+  		ListView list = (ListView) dialog.findViewById(R.id.listinfo222);
+        list.setAdapter(adapter);
+        
+        dialog.show();
 	}
 	
 
@@ -280,11 +329,50 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			holder.customerId.setText(String.valueOf(rowItem.getID()));
 			holder.txtName.setText(rowItem.getName());
 			holder.txtAddress.setText(String.valueOf(rowItem.getAddress()));
-			byte[] decodedString = Base64.decode(rowItem.getImage(), Base64.DEFAULT);
-			Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-			BitmapDrawable ob = new BitmapDrawable(decodedByte);
-			holder.img.setBackgroundDrawable(ob);
+			
+			if (!rowItem.getImage().toString().equals("null")){
+				Log.d("CordovaLog", "+++++++++++++++++++++--------------+++++++++++++++++++++++++");
+				byte[] decodedString = Base64.decode(rowItem.getImage(), Base64.DEFAULT);
+				Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+				BitmapDrawable ob = new BitmapDrawable(decodedByte);
+				holder.img.setBackgroundDrawable(ob);
+			}else{
+				Log.d("CordovaLog", "*********************---------------************************");
+				holder.img.setImageResource(R.drawable.analizatelogo);
+			}
+			
 			return convertView;
 		}
 	}   
+
+	public class CustomList extends ArrayAdapter<String>{
+		private final Activity context;
+		private final String[] web;
+		private final String[] infoStr;
+		private final Integer[] imageId;
+		public CustomList(Activity context, String[] web, String[] info, Integer[] imageId) {
+			super(context, R.layout.row_info_hosp, web);
+			this.context = context;
+			this.web = web;
+			this.infoStr = info;
+			this.imageId = imageId;
+		}
+		@Override
+		public View getView(int position, View view, ViewGroup parent) {
+			LayoutInflater inflater = context.getLayoutInflater();
+			View rowView= inflater.inflate(R.layout.row_info_hosp, null, true);
+			TextView txtTitle = (TextView) rowView.findViewById(R.id.current_title);
+			TextView txtInfo = (TextView) rowView.findViewById(R.id.current_desc);
+			//ImageView imageView = (ImageView) rowView.findViewById(R.id.list_image);
+			txtTitle.setText(web[position]);
+			txtInfo.setText(infoStr[position]);
+			
+			Log.d("CordovaLog", "------------->>>> " + position);
+			Log.d("CordovaLog", "------------->>>> " + web[position]);
+			//Log.d("CordovaLog", "------------->>>> " + infoStr[position]);
+			
+			//imageView.setImageResource(imageId[position]);
+			return rowView;
+		}
+	}
 }

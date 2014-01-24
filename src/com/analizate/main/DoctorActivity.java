@@ -174,7 +174,7 @@ public class DoctorActivity extends Activity implements OnItemClickListener{
         					String observations = c.getString("observations");
         					String avatar_base64 = c.getString("avatar_base64");
         				 	String desc = c.getString("desc");
-        				 	db.add(new Doctor(1, specialty_name, email, phone, cellular, address, observations, avatar_base64));
+        				 	//db.add(new Doctor(1, specialty_name, email, phone, cellular, address, observations, avatar_base64));
         				 	//db.add(new Service(name, desc));
         				 	Log.d("CordovaLog", "SAVED !!!!!!");
         				}

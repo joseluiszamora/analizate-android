@@ -1,11 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">analizate</string>
+    <string name="app_name">Analizate</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="email">Email</string>
+    <string name="UserName">Nombre de Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="viewLists">Ver Listados</string>
+    <string name="newTransaction">Nueva Transaccion</string>
+    <string name="direccion">Direccion</string>
+    <string name="title_capture">Captura de Imagenes</string>
+    <string name="snap_shot">Sacar Fotografia</string>
+    <string name="select">Seleccionar</string>
+    <string name="send">Guardar cambios</string>
+    <string name="upload_data">Se subio la image</string>
+    <string name="deleted_photo">Foto eliminada</string>
+    <string name="delete">Eliminar</string>
+    <string name="photo">Fotografia</string>
+    <string name="save_version_title">Guardar La Supervisión</string>
+    <string name="save_version_message">        Al Guardar la supervisión será permanente en el Sistema. \n\n
+        Si desea Ver podrá editar los cambios hechos. \n\n
+        Si desea Eliminar todos los cambios serán borrados del dispositivo.</string>
+    <string name="save_version_positive">Guardar</string>
+    <string name="save_version_neutral">Ver</string>
+    <string name="save_version_negative">Eliminar</string>
+    <string name="dashboard_back_press_msg">Esta seguro de Salir de Khipus?</string>
+    <string name="supervision_back_press_msg">Se Perderán los datos ingresados, quiere salir?</string>
+    <string name="no_connection">"No hay conexión a Internet"</string>
+    <string name="no_gps">"El GPS es necesario para la aplicación y fue activado."</string>
+    <string name="no_gps_countdown">"Espere a que el GPS se active"</string>
+    <string name="pos_cero">"Su GPS presenta problemas, La supervision no será guardada"</string>
+    <string name="pos_up">"Debe encontrarse por lo menos a 100 metros del proyecto"</string>
+    <string name="yes">"Sí"</string>
+    <string name="no">"No"</string>
+    <string name="no_save_photo">La photo no pudo ser almacenada por la cámara.</string>
     
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_expandable_list">ExpandableList Demo</string>
     
+    <string-array name="menu_grid_items">
+        <item>Ver Fotos</item>
+        <item>Eliminar</item>
+    </string-array>
     <string-array name="proyects_fields">
         <item>Codigo</item>
         <item>Institucion Ejecutora</item>
@@ -20,5 +56,4 @@
         <item>Fecha de Inicio</item>
         <item>Total Financiado</item>
     </string-array>
-
 </resources>

@@ -8,6 +8,8 @@
     android:paddingRight="15dp"
     android:paddingTop="20dp" 
 >
+	<!-- Include Action Bar -->
+    <include layout="@layout/actionbar_layout"/>
     
     <LinearLayout
         android:layout_width="match_parent"

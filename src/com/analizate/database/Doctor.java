@@ -1,10 +1,13 @@
 package com.analizate.database;
 
+import android.util.Log;
+
 public class Doctor {
 	//private variables
 	int _id;
 	int _id_especialty;
 	String _name;
+	String _specialty_name;
 	String _mail;
 	String _phone;
 	String _cellphone;
@@ -13,13 +16,13 @@ public class Doctor {
 	String _image;
 	
   	//Empty constructor
-	public Doctor(){
-	}
+	public Doctor(){ }
   // constructor
-	public Doctor(int id, int id_especialty, String name, String mail, String phone, String cellphone, String address, String obs, String image){
+	public Doctor(int id, int id_especialty, String specialty_name, String name, String mail, String phone, String cellphone, String address, String obs, String image){
 		this._id = id;
 		this._id_especialty = id_especialty;
 		this._name = name;
+		this._specialty_name = specialty_name;
 		this._mail = mail;
 		this._phone = phone;
 		this._cellphone = cellphone;
@@ -28,9 +31,10 @@ public class Doctor {
 		this._image = image;
 	}
   // constructor
-  public Doctor(int id_especialty, String name, String mail, String phone, String cellphone, String address, String obs, String image){
+  public Doctor(int id_especialty, String specialty_name, String name, String mail, String phone, String cellphone, String address, String obs, String image){
     this._id_especialty = id_especialty;
     this._name = name;
+    this._specialty_name = specialty_name;
     this._mail = mail;
     this._phone = phone;
     this._cellphone = cellphone;
@@ -61,6 +65,14 @@ public class Doctor {
   // setting name
   public void setName(String name){
     this._name = name;
+  }
+  //getting name
+  public String getSpecialtyName(){
+	  return this._specialty_name;
+  }
+  // setting name
+  public void setSpecialtyName(String specialtyName){
+	  this._specialty_name = specialtyName;
   }
   // getting mail
   public String getMail(){
@@ -104,7 +116,9 @@ public class Doctor {
   }
   // getting image
   public String getImage(){
-    return this._image;
+	  //Log.d("CordovaLog", "QUOOOOOOOOOOOOOOOOOOOo");
+	  //Log.d("CordovaLog", "UUUUUUUUUUUUUUUU " + this._image);
+	  return this._image;
   }
   // setting image
   public void setImage(String image){

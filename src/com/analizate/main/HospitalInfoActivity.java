@@ -35,19 +35,15 @@ public class HospitalInfoActivity extends Activity {
   		name.setText(institution.getName());
   		
 		final String[] title = {
-		    "Codigo",
-		    "Tipo de Proyecto",
-		    "Coordenadas",
-		    "Avance Fisico",
-		    "Avance Financiero",
-		    "Director",
-		    "Supervisor",
-		    "Monto Desembolsado",
-		    "Instituciones"
+		    "Dirección",
+		    "Telefono",
+		    "Mail",
+		    "Web",
+		    "Desc",
+		    "Imagen"
 		};
 
   		final String[] info = {
-  			institution.getCategory(),
 	        institution.getAddress(),
 	        institution.getPhone(),
 	        institution.getMail(),
@@ -62,7 +58,6 @@ public class HospitalInfoActivity extends Activity {
   		            R.drawable.exit,
   		            R.drawable.exit,
   		            R.drawable.exit,
-  		            R.drawable.exit,
   		            R.drawable.exit
   		    };
   		    
@@ -70,7 +65,6 @@ public class HospitalInfoActivity extends Activity {
   	        list=(ListView)findViewById(R.id.listinfo);
   	        list.setAdapter(adapter);
 	}
-	
 	
 	public class CustomList extends ArrayAdapter<String>{
 		private final Activity context;
@@ -91,9 +85,12 @@ public class HospitalInfoActivity extends Activity {
 			TextView txtTitle = (TextView) rowView.findViewById(R.id.current_title);
 			TextView txtInfo = (TextView) rowView.findViewById(R.id.current_desc);
 			//ImageView imageView = (ImageView) rowView.findViewById(R.id.list_image);
-			Log.d("CordovaLog", "------------->>>> " + position);
 			txtTitle.setText(web[position]);
 			txtInfo.setText(infoStr[position]);
+			
+			Log.d("CordovaLog", "------------->>>> " + position);
+			Log.d("CordovaLog", "------------->>>> " + web[position]);
+			//Log.d("CordovaLog", "------------->>>> " + infoStr[position]);
 			
 			//imageView.setImageResource(imageId[position]);
 			return rowView;

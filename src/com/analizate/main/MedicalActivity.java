@@ -13,10 +13,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,6 +30,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,7 +87,7 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 			Toast toast = Toast.makeText(MedicalActivity.this, "Conexión de datos no disponible", Toast.LENGTH_SHORT);
 			toast.show();
         }
-				
+		
 	    listView = (ListView) findViewById(R.id.contentlistclient);
 	    edittext = (EditText) findViewById(R.id.textSearch);
 	    
@@ -157,7 +162,19 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
         					String specialty_name = c.getString("specialty_name");
         					String observations = c.getString("observations");
         					String avatar_base64 = c.getString("avatar_base64");
-        				 	db.add(new Doctor(1, specialty_name, email, phone, cellular, address, observations, avatar_base64));
+        					
+        					/*Log.d("CordovaLog", "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        					Log.d("CordovaLog", name);
+        					Log.d("CordovaLog", email);
+        					Log.d("CordovaLog", phone);
+        					Log.d("CordovaLog", cellular);
+        					Log.d("CordovaLog", address);
+        					Log.d("CordovaLog", specialty_name);
+        					Log.d("CordovaLog", observations);
+        					*/
+        					//Log.d("CordovaLog", avatar_base64);
+        					
+        					db.add(new Doctor(1, specialty_name, name, email, phone, cellular, address, observations, avatar_base64));
         				 	Log.d("CordovaLog", "SAVED !!!!!!");
         				}
         			}
@@ -212,13 +229,13 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		Log.d("log_tag", "Clicking");
-		String obj_id = (String) ((TextView) arg1.findViewById(R.id.customer_id)).getText();
+		/*String obj_id = (String) ((TextView) arg1.findViewById(R.id.customer_id)).getText();
 		Log.d("log_tag", obj_id);
         Intent intentNewProduct = new Intent(this, HospitalInfoActivity.class);
 		Bundle bundle = new Bundle();
 		bundle.putString("obj_id", obj_id);
 		intentNewProduct.putExtras(bundle);
-		startActivity(intentNewProduct);
+		startActivity(intentNewProduct);*/
 	}
 	
 	
@@ -260,14 +277,14 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 		public Object getItemCustom(int position) {
 			return rowDoctors.get(position);
 		}
-	
-		
+
 		/* private view holder class */
 		private class ViewHolder {
 			TextView customerId;
 			TextView txtName;
 			TextView txtSpeciality;
 			TextView txtAddress;
+			ImageView img;
 		}
 	      
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -277,23 +294,44 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 				convertView = inflater.inflate(R.layout.row_doctor, null);
 						
 				holder = new ViewHolder();
-				//textSpeciality
 				holder.customerId = (TextView) convertView.findViewById(R.id.customer_id);
 				holder.txtName = (TextView) convertView.findViewById(R.id.customerName);
 				holder.txtSpeciality = (TextView) convertView.findViewById(R.id.textSpeciality);
 				holder.txtAddress = (TextView) convertView.findViewById(R.id.customerAddress);
+				holder.img = (ImageView) convertView.findViewById(R.id.list_image);
 				convertView.setTag(holder);
 			}
 			else {
 				holder = (ViewHolder) convertView.getTag();
 			}	 
 			Doctor rowItem = (Doctor) getItem(position);
-			Log.d("CordovaLog", rowItem.getID() + " -- " + rowItem.getIdEspeciality() + " -- " + rowItem.getPhone());
+			
+			Log.d("CordovaLog", rowItem.getName());
+			Log.d("CordovaLog", rowItem.getImage() + "");
+			//Log.d("CordovaLog", rowItem.getName());
+			//Log.d("CordovaLog", rowItem.getID() + " -- " + rowItem.getSpecialtyName() + " -- " + rowItem.getPhone());
+			
 			holder.customerId.setText(String.valueOf(rowItem.getID()));
-			holder.txtSpeciality.setText(String.valueOf(rowItem.getIdEspeciality()));
 			holder.txtName.setText(rowItem.getName());
-			holder.txtAddress.setText(String.valueOf(rowItem.getPhone() + " - " + rowItem.getCellPhone())); 
-				
+			holder.txtSpeciality.setText(rowItem.getSpecialtyName());
+			holder.txtAddress.setText(rowItem.getPhone() + ", " + rowItem.getCellPhone());
+			
+			//Log.d("CordovaLog", "&&&&&&&&&&&&&&&&&&");
+			//Log.d("CordovaLog", rowItem.getImage());
+			/*
+			Log.d("CordovaLog", rowItem.getImage().toString());
+			
+			if (!rowItem.getImage().toString().equals("null")){
+				Log.d("CordovaLog", "+++++++++++++++++++++--------------+++++++++++++++++++++++++");
+				byte[] decodedString = Base64.decode(rowItem.getImage(), Base64.DEFAULT);
+				Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+				BitmapDrawable ob = new BitmapDrawable(decodedByte);
+				holder.img.setBackgroundDrawable(ob);
+			}else{
+				*///Log.d("CordovaLog", "*********************---------------************************");
+				holder.img.setImageResource(R.drawable.analizatelogo);
+			/*}*/
+			
 			return convertView;
 		}	
 	}   

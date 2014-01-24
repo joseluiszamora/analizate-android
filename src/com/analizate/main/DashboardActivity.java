@@ -15,11 +15,11 @@ public class DashboardActivity extends Activity{
 		setContentView(R.layout.activity_dashboard);
 		
         // declare buttons 
-        final Button btnHospitals = (Button)findViewById(R.id.btnHospitals);
-		final Button btnMedical = (Button)findViewById(R.id.btnMedical);
-		final Button btnPharms = (Button)findViewById(R.id.btnPharms);
-		final Button btnAboutUs = (Button)findViewById(R.id.btnAboutUs);
-		final Button btnOurServices = (Button)findViewById(R.id.btnOurServices);
+        final Button btnHospitals = (Button)findViewById(R.id.btnViewHistory);
+		final Button btnMedical = (Button)findViewById(R.id.btnLogout);
+		final Button btnPharms = (Button)findViewById(R.id.btnUpdate);
+		final Button btnAboutUs = (Button)findViewById(R.id.btnMap);
+		final Button btnOurServices = (Button)findViewById(R.id.btnViewProjects);
 		
 		// click btn Hospitals
 		btnHospitals.setOnClickListener(new OnClickListener() {

@@ -37,7 +37,7 @@ public class DatabaseHandlerInstitution extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
+		String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
 			+ KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_CATEGORY + " TEXT," + KEY_ADDRESS + " TEXT," 
 				+ KEY_PHONE + " TEXT," + KEY_MAIL + " TEXT," + KEY_WEB + " TEXT," + KEY_DESC + " TEXT," + KEY_IMAGE + " TEXT" + ")";
 		db.execSQL(CREATE_TABLE);
@@ -55,6 +55,10 @@ public class DatabaseHandlerInstitution extends SQLiteOpenHelper {
 		// Drop older table if existed
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
 		// Create tables again
+		onCreate(db);
+	}
+	public void setTable() {
+		SQLiteDatabase db = this.getReadableDatabase();
 		onCreate(db);
 	}
 	// Adding new product

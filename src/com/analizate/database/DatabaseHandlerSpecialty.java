@@ -30,9 +30,13 @@ public class DatabaseHandlerSpecialty extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
+		String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
 			+ KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_DESC + " TEXT" + ")";
 		db.execSQL(CREATE_TABLE);
+	}
+	public void setTable() {
+		SQLiteDatabase db = this.getReadableDatabase();
+		onCreate(db);
 	}
 
 	@Override

@@ -2,21 +2,57 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_weight="1"
-    android:background="#eee" >
-
-	<!--  Ver Doctores -->
+     >
+    
+	<!--  Button Projects -->
 
     <Button
-        android:id="@+id/btnDoctors"
+        android:id="@+id/btnViewProjects"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/btn_viewlist"
-        android:text="Medicos" />
+        android:drawableTop="@drawable/ourservices"
+        android:text="Nuestros Servicios" />
 	
-    <!--  Ver Hospitales -->
-    <Button
-        android:id="@+id/btnHospitals"
+    <!--  Button History -->
+
+    <Button
+        android:id="@+id/btnViewHistory"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/btn_new_transaction"
+        android:drawableTop="@drawable/hospital"
         android:text="Hospitales" />
     
+    <!--  Button Update -->
+
+    <Button
+        android:id="@+id/btnUpdate"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/pharms"
+        android:text="Farmacias" />
+    
+    <!--  Button Logout -->
+
+    <Button
+        android:id="@+id/btnLogout"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/doctor"
+        android:text="Medicos" />
+    
+    <!--  Nueva Transaccion -->
+
+    <Button
+        android:id="@+id/btnMap"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/about"
+        android:text="Quienes Somos" />
+    
+    <!--Entregas 
+    <Button
+        android:id="@+id/btn_delivery"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/btn_entregas"
+        android:text="Entregas" />
+	 --> 
+	 <Button
+        android:id="@+id/btn_delivery"
+        style="@style/DashboardButton"
+        android:text="" />
 </com.analizate.main.DashboardLayout>
