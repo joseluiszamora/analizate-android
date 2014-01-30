@@ -1,22 +1,17 @@
 package com.analizate.main;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.NameValuePair;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,12 +23,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.analizate.database.DatabaseHandlerInstitution;
 import com.analizate.database.Institution;
@@ -133,15 +128,52 @@ public class PharmsActivity extends Activity implements OnItemClickListener {
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Log.d("log_tag", "Clicking");
-		String obj_id = (String) ((TextView) arg1
-				.findViewById(R.id.customer_id)).getText();
-		Log.d("log_tag", obj_id);
-		Intent intentNewProduct = new Intent(this, HospitalInfoActivity.class);
-		Bundle bundle = new Bundle();
-		bundle.putString("obj_id", obj_id);
-		intentNewProduct.putExtras(bundle);
-		startActivity(intentNewProduct);
+		String obj_id = (String) ((TextView) arg1.findViewById(R.id.customer_id)).getText();
+		// custom dialog
+		final Dialog dialog = new Dialog(PharmsActivity.this, R.style.cust_dialog);
+		dialog.setContentView(R.layout.dialog_template);
+	    // get this
+		Institution institution = db.get(obj_id);
+	    String name = "";
+	    String desc = "";
+		try {
+			name = URLDecoder.decode(institution.getName(), "UTF-8");
+			desc = URLDecoder.decode(institution.getDesc(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		dialog.setTitle(name);
+		final String[] title = {
+		    "Dirección",
+		    "Telefono",
+		    "Mail",
+		    "Web",
+		    "Desc"
+		};
+
+  		final String[] info = {
+	        institution.getAddress(),
+	        institution.getPhone(),
+	        institution.getMail(),
+	        institution.getWeb(),
+	        institution.getDesc()
+	    };
+  	  	  
+	    Integer[] imageId = {
+	            R.drawable.exit,
+	            R.drawable.exit,
+	            R.drawable.exit,
+	            R.drawable.exit,
+	            R.drawable.exit
+	    };
+	    
+  		CustomList adapter = new CustomList(PharmsActivity.this, title,  info, imageId);
+  		ListView list = (ListView) dialog.findViewById(R.id.listinfo222);
+        list.setAdapter(adapter);
+        
+        dialog.show();
 	}
 
 	class CustomAdapterHospitals extends BaseAdapter {
@@ -230,5 +262,33 @@ public class PharmsActivity extends Activity implements OnItemClickListener {
 			return convertView;
 		}
 
+	}
+	
+	
+	public class CustomList extends ArrayAdapter<String>{
+		private final Activity context;
+		private final String[] web;
+		private final String[] infoStr;
+		private final Integer[] imageId;
+		public CustomList(Activity context, String[] web, String[] info, Integer[] imageId) {
+			super(context, R.layout.row_info_hosp, web);
+			this.context = context;
+			this.web = web;
+			this.infoStr = info;
+			this.imageId = imageId;
+		}
+		@Override
+		public View getView(int position, View view, ViewGroup parent) {
+			LayoutInflater inflater = context.getLayoutInflater();
+			View rowView= inflater.inflate(R.layout.row_info_hosp, null, true);
+			TextView txtTitle = (TextView) rowView.findViewById(R.id.current_title);
+			TextView txtInfo = (TextView) rowView.findViewById(R.id.current_desc);
+			txtTitle.setText(web[position]);
+			txtInfo.setText(infoStr[position]);
+			
+			Log.d("CordovaLog", "------------->>>> " + position);
+			Log.d("CordovaLog", "------------->>>> " + web[position]);
+			return rowView;
+		}
 	}
 }

@@ -206,28 +206,11 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		String obj_id = (String) ((TextView) arg1.findViewById(R.id.customer_id)).getText();
-		/*
-        Intent intentNewProduct = new Intent(this, OurServicesInfoActivity.class);
-		Bundle bundle = new Bundle();
-		bundle.putString("obj_id", custom_name);		
-		intentNewProduct.putExtras(bundle);
-		startActivity(intentNewProduct);
-		finish();*/		
-		
-		
-		
 		// custom dialog
 		final Dialog dialog = new Dialog(OurServicesActivity.this, R.style.cust_dialog);
 		dialog.setContentView(R.layout.dialog_template2);
-		
 	    // get this
-		Log.d("CordovaLog", "======");
-		Log.d("CordovaLog", obj_id);
-		
 	    Service service = db.get(obj_id);
-	    Log.d("CordovaLog", service.getName());
-	    // Define TextViews
-	    
 	    String name = "";
 	    String desc = "";
 		try {
@@ -241,29 +224,10 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
 		dialog.setTitle(name);
 		final String[] title = { "" };
   		final String[] info = { desc };
-	    
   		Integer[] imageId = { R.drawable.exit };
-	    
   		TextView textview = (TextView) dialog.findViewById(R.id.textViewDialog2);
-  		
   		textview.setText(Html.fromHtml(desc));
-  		
-		/*// set the custom dialog components - text, image and button
-		TextView text = (TextView) dialog.findViewById(R.id.text);
-		text.setText("Android custom dialog example!");
-		ImageView image = (ImageView) dialog.findViewById(R.id.image);
-		image.setImageResource(R.drawable.ic_launcher);
- 
-		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-		// if button is clicked, close the custom dialog
-		dialogButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});*/
- 
-		dialog.show();
+  		dialog.show();
 	}
 	
     
@@ -314,7 +278,6 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
 	    private class ViewHolder {
 	        TextView customerId;
 	        TextView txtName;
-	        //TextView txtAddress;
 	    }
 	    
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -326,7 +289,6 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
 		        holder = new ViewHolder();
 		        holder.customerId = (TextView) convertView.findViewById(R.id.customer_id);
 		        holder.txtName = (TextView) convertView.findViewById(R.id.customerName);
-		        //holder.txtAddress = (TextView) convertView.findViewById(R.id.customerAddress);
 		        convertView.setTag(holder);
 		     }
 		     else {
@@ -336,8 +298,7 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
 			Service rowItem = (Service) getItem(position);
 		      holder.customerId.setText(String.valueOf(rowItem.getID()));
 		      holder.txtName.setText(rowItem.getName());
-		      //holder.txtAddress.setText(""); 
-			
+
 			return convertView;
 		  }
 	}
@@ -361,18 +322,9 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
 			LayoutInflater inflater = context.getLayoutInflater();
 			View rowView= inflater.inflate(R.layout.row_info_hosp, null, true);
 			TextView txtTitle = (TextView) rowView.findViewById(R.id.current_title);
-			
 			TextView txtInfo = (TextView) rowView.findViewById(R.id.current_desc);
-			
-			//ImageView imageView = (ImageView) rowView.findViewById(R.id.list_image);
-			Log.d("CordovaLog", "------------->>>> " + position);
 			txtTitle.setText(web[position]);
 			txtInfo.setText(infoStr[position]);
-
-			//Spanned marked_up = Html.fromHtml(infoStr[position]);
-			//txtInfo.setText(marked_up.toString(),BufferType.SPANNABLE);
-			
-			//imageView.setImageResource(imageId[position]);
 			return rowView;
 		}
 	}

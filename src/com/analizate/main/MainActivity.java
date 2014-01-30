@@ -19,7 +19,7 @@ import com.analizate.database.DatabaseHandlerSpecialty;
 
 public class MainActivity extends Activity {
 	// Splash screen timer
-	private static int SPLASH_TIME_OUT = 2500;
+	private static int SPLASH_TIME_OUT = 4000;
 	
 	public void onAttachedToWindow() {
         super.onAttachedToWindow();

@@ -12,7 +12,7 @@
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
         android:layout_height="402dp"
-        android:layout_marginTop="59dp"
-        android:src="@drawable/analizatelogo" />
+        android:layout_marginTop="-20dp"
+        android:src="@drawable/log3" />
 
 </LinearLayout>

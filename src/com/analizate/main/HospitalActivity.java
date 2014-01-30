@@ -76,13 +76,13 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_hospital);
 		
-		Log.d("CordovaLog", "dddddddddddd");
-		
-	   listView = (ListView) findViewById(R.id.listHospitals);
-	   edittext = (EditText) findViewById(R.id.textSearchHospitals);
-	   db = new DatabaseHandlerInstitution(this, "", null, '1');
+		listView = (ListView) findViewById(R.id.listHospitals);
+		edittext = (EditText) findViewById(R.id.textSearchHospitals);
+		edittext.clearFocus();
+		db = new DatabaseHandlerInstitution(this, "", null, '1');
 	   
 	    internet = new InternetDetector(getApplicationContext());
+	    
 		if (internet.isConnectingToInternet()) {
 			pDialog = new ProgressDialog(HospitalActivity.this);
 			pDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -147,7 +147,7 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 		startActivity(intentNewProduct);*/
 		
 		// custom dialog
-		final Dialog dialog = new Dialog(HospitalActivity.this);
+		final Dialog dialog = new Dialog(HospitalActivity.this, R.style.cust_dialog);
 		dialog.setContentView(R.layout.dialog_template);
 
 	    // get this
@@ -162,8 +162,7 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 		    "Telefono",
 		    "Mail",
 		    "Web",
-		    "Desc",
-		    "Imagen"
+		    "Desc"
 		};
 
   		final String[] info = {
@@ -171,12 +170,10 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 	        institution.getPhone(),
 	        institution.getMail(),
 	        institution.getWeb(),
-	        institution.getDesc(),
-	        institution.getImage()
+	        institution.getDesc()
 	    };
   	  	  
 	    Integer[] imageId = {
-	            R.drawable.exit,
 	            R.drawable.exit,
 	            R.drawable.exit,
 	            R.drawable.exit,
@@ -216,11 +213,8 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
         					JSONObject c = results.getJSONObject(i);
         				 	db.add(new Institution(c.getString("name"), c.getString("category"), c.getString("address"), c.getString("phone"), 
         				 			c.getString("mail"), c.getString("web"), c.getString("desc"), c.getString("logo_base64")));
-        				 	Log.d("log_tag", "SAVED !!!!!!");
         				}
         			}
-    			}else{
-    				Log.d("log_tag", "Fallo!!!!!!");
     			}
     		}
     		catch (Exception e) {}
@@ -331,13 +325,11 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			holder.txtAddress.setText(String.valueOf(rowItem.getAddress()));
 			
 			if (!rowItem.getImage().toString().equals("null")){
-				Log.d("CordovaLog", "+++++++++++++++++++++--------------+++++++++++++++++++++++++");
 				byte[] decodedString = Base64.decode(rowItem.getImage(), Base64.DEFAULT);
 				Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 				BitmapDrawable ob = new BitmapDrawable(decodedByte);
 				holder.img.setBackgroundDrawable(ob);
 			}else{
-				Log.d("CordovaLog", "*********************---------------************************");
 				holder.img.setImageResource(R.drawable.analizatelogo);
 			}
 			
@@ -349,13 +341,11 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 		private final Activity context;
 		private final String[] web;
 		private final String[] infoStr;
-		private final Integer[] imageId;
 		public CustomList(Activity context, String[] web, String[] info, Integer[] imageId) {
 			super(context, R.layout.row_info_hosp, web);
 			this.context = context;
 			this.web = web;
 			this.infoStr = info;
-			this.imageId = imageId;
 		}
 		@Override
 		public View getView(int position, View view, ViewGroup parent) {
@@ -363,15 +353,8 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			View rowView= inflater.inflate(R.layout.row_info_hosp, null, true);
 			TextView txtTitle = (TextView) rowView.findViewById(R.id.current_title);
 			TextView txtInfo = (TextView) rowView.findViewById(R.id.current_desc);
-			//ImageView imageView = (ImageView) rowView.findViewById(R.id.list_image);
 			txtTitle.setText(web[position]);
 			txtInfo.setText(infoStr[position]);
-			
-			Log.d("CordovaLog", "------------->>>> " + position);
-			Log.d("CordovaLog", "------------->>>> " + web[position]);
-			//Log.d("CordovaLog", "------------->>>> " + infoStr[position]);
-			
-			//imageView.setImageResource(imageId[position]);
 			return rowView;
 		}
 	}

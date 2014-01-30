@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,6 +40,7 @@ import android.widget.Toast;
 import com.analizate.database.DatabaseHandlerDoctor;
 import com.analizate.database.Doctor;
 import com.analizate.database.Institution;
+import com.analizate.main.HospitalActivity.CustomList;
 import com.analizate.webservice.InternetDetector;
 import com.analizate.webservice.JSONParser;
 
@@ -142,7 +145,6 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 			JSONArray results = null;
 			// getting JSON string from URL
     		String returnJson = jsonParser.makeHttpRequest("http://www.analizate.com.bo/api/v1/users/doctors.json", "GET", paramsx);
-    		//String returnJson = jsonParser.makeHttpRequest("http://www.analizate.com.bo/api/v1/services.json", "GET", paramsx);
     		
     		try {
     			Log.d("CordovaLog", "> " + returnJson.trim());
@@ -162,20 +164,7 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
         					String specialty_name = c.getString("specialty_name");
         					String observations = c.getString("observations");
         					String avatar_base64 = c.getString("avatar_base64");
-        					
-        					/*Log.d("CordovaLog", "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        					Log.d("CordovaLog", name);
-        					Log.d("CordovaLog", email);
-        					Log.d("CordovaLog", phone);
-        					Log.d("CordovaLog", cellular);
-        					Log.d("CordovaLog", address);
-        					Log.d("CordovaLog", specialty_name);
-        					Log.d("CordovaLog", observations);
-        					*/
-        					//Log.d("CordovaLog", avatar_base64);
-        					
         					db.add(new Doctor(1, specialty_name, name, email, phone, cellular, address, observations, avatar_base64));
-        				 	Log.d("CordovaLog", "SAVED !!!!!!");
         				}
         			}
     			}else{
@@ -211,9 +200,7 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 				// set all Customers List
 			    text = db.getAllNames();
 			    final List<Doctor> rowItemsProd = db.getAll();
-			    //listview.setAdapter(new CustomAdapterProducts(this, text, rowItems));
 			    CustomAdapterDoctors adapter = new CustomAdapterDoctors(MedicalActivity.this, text, rowItemsProd);
-			    //ProductsAdapter adapter = new ProductsAdapter(this, rowItems);
 			    listView.setAdapter(adapter);
 			    listView.setOnItemClickListener(MedicalActivity.this);
 				pDialog.dismiss();
@@ -228,14 +215,44 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		Log.d("log_tag", "Clicking");
-		/*String obj_id = (String) ((TextView) arg1.findViewById(R.id.customer_id)).getText();
-		Log.d("log_tag", obj_id);
-        Intent intentNewProduct = new Intent(this, HospitalInfoActivity.class);
-		Bundle bundle = new Bundle();
-		bundle.putString("obj_id", obj_id);
-		intentNewProduct.putExtras(bundle);
-		startActivity(intentNewProduct);*/
+		String obj_id = (String) ((TextView) arg1.findViewById(R.id.customer_id)).getText();
+		
+		// custom dialog
+		final Dialog dialog = new Dialog(MedicalActivity.this, R.style.cust_dialog);
+		dialog.setContentView(R.layout.dialog_template);
+		
+		Doctor doctor = db.get(obj_id);
+	    dialog.setTitle(doctor.getName());
+	    
+	    final String[] title = {
+		    "Dirección",
+		    "Telefono",
+		    "Mail",
+		    "Web",
+		    "Desc"
+		};
+
+  		final String[] info = {
+  			doctor.getAddress(),
+  			doctor.getPhone(),
+  			doctor.getMail(),
+  			doctor.getSpecialtyName(),
+  			doctor.getCellPhone()
+	    };
+  	  	  
+	    Integer[] imageId = {
+	            R.drawable.exit,
+	            R.drawable.exit,
+	            R.drawable.exit,
+	            R.drawable.exit,
+	            R.drawable.exit
+	    };
+	    
+  		CustomList adapter = new CustomList(MedicalActivity.this, title,  info, imageId);
+  		ListView list = (ListView) dialog.findViewById(R.id.listinfo222);
+        list.setAdapter(adapter);
+        
+        dialog.show();
 	}
 	
 	
@@ -335,4 +352,27 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 			return convertView;
 		}	
 	}   
+
+	public class CustomList extends ArrayAdapter<String>{
+		private final Activity context;
+		private final String[] web;
+		private final String[] infoStr;
+		public CustomList(Activity context, String[] web, String[] info, Integer[] imageId) {
+			super(context, R.layout.row_info_hosp, web);
+			this.context = context;
+			this.web = web;
+			this.infoStr = info;
+		}
+		@Override
+		public View getView(int position, View view, ViewGroup parent) {
+			LayoutInflater inflater = context.getLayoutInflater();
+			View rowView= inflater.inflate(R.layout.row_info_hosp, null, true);
+			TextView txtTitle = (TextView) rowView.findViewById(R.id.current_title);
+			TextView txtInfo = (TextView) rowView.findViewById(R.id.current_desc);
+			txtTitle.setText(web[position]);
+			txtInfo.setText(infoStr[position]);
+			
+			return rowView;
+		}
+	}
 }
