@@ -323,7 +323,9 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			holder.customerId.setText(String.valueOf(rowItem.getID()));
 			holder.txtName.setText(rowItem.getName());
 			holder.txtAddress.setText(String.valueOf(rowItem.getAddress()));
-			//holder.img.setImageResource(R.drawable.analizatelogo);¡
+			
+			
+			//holder.img.setImageResource(R.drawable.analizatelogo);
 			if (!rowItem.getImage().toString().equals("null")){
 				Log.d("CordovaLog", "*****------------->>>> SIIII entro");
 				byte[] decodedString = Base64.decode(rowItem.getImage(), Base64.DEFAULT);
@@ -332,8 +334,11 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 				holder.img.setBackgroundDrawable(ob);
 			}else{
 				Log.d("CordovaLog", "*****------------->>>> NOOOOO entro");
-				holder.img.setImageResource(R.drawable.analizatelogo);
+				//holder.img.setImageResource(R.drawable.analizatelogo);
 			}
+			
+			
+			
 			return convertView;
 		}
 	}
