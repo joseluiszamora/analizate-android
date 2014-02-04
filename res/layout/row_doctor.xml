@@ -3,6 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="@drawable/txt"
     android:paddingLeft="10dp"
     android:paddingRight="10dp" >
 
@@ -12,7 +13,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="#FFFFFF"
+        android:background="@drawable/txt"
         android:padding="5dp"
         android:orientation="vertical" >
 
@@ -31,9 +32,10 @@
 
             <ImageView
                 android:id="@+id/list_image"
+                android:background="@drawable/analizatelogo"
                 android:layout_width="50dip"
-                android:layout_height="50dip"
-                android:src="@drawable/analizatelogo" />
+                android:layout_height="50dip" />
+
         </LinearLayout>
 
         <TextView
@@ -52,21 +54,11 @@
             android:id="@+id/customerAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/thumbnail"
-            android:layout_alignLeft="@+id/customerName"
-            android:text="TextView"
-            android:textColor="#343434"
-            android:textSize="10dp" />
-
-        <TextView
-            android:id="@+id/textSpeciality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/customerName"
             android:layout_centerVertical="true"
             android:text="TextView"
             android:textColor="#343434"
-            android:textSize="12sp" />
+            android:textSize="10dp" />
 
     </RelativeLayout>
 

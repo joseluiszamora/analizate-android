@@ -6,40 +6,62 @@
     android:orientation="vertical"
      >
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingTop="7dp" >
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/analizateogo" />
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-             >
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:textColor="#FFFFFF"
-                android:text="Llegar a consagrarnos en una institución respetable y confiable de apoyo diagnostico laboratorial, satisfechos de haber contribuido al desarrollo en salud hospitalaria de nuestra sociedad. Ser reconocido sobre todo por nuestra actitud profesional y humana."
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+             <TextView
+                 android:id="@+id/textView1xx"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/textView3xx"
+                 android:layout_centerHorizontal="true"
+                 android:layout_marginBottom="10dp"
+                 android:layout_marginTop="14dp"
+                 android:background="@drawable/txt"
+                 android:text="111111"
+                 android:padding="5dp"
+                 android:textColor="#040404"
+                 android:textSize="16dp" />
+
+             <TextView
+                 android:id="@+id/textView2xxy"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/textView1xx"
+                 android:layout_centerHorizontal="true"
+                 android:layout_marginBottom="10dp"
+                 android:layout_marginTop="14dp"
+                 android:background="@drawable/txt"
+                 android:padding="5dp"
+                 android:text="22222"
+                 android:textColor="#040404"
+                 android:textSize="16dp" />
+
+             <TextView
+                 android:id="@+id/textView3xx"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentTop="true"
+                 android:layout_centerHorizontal="true"
+                 android:background="@drawable/txt"
+                 android:padding="5dp"
+                 android:text="3333"
+                 android:textAppearance="?android:attr/textAppearanceMedium"
+                 android:textColor="#040404"
+                 android:textSize="16dp" />
             
         </RelativeLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

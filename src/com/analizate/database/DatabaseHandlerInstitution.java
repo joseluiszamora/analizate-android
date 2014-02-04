@@ -142,13 +142,13 @@ public class DatabaseHandlerInstitution extends SQLiteOpenHelper {
 	
 	// Getting All For Search
 	public List<Institution> getAllSearch(String like, String category) {
+		//Select All Query
 		List<Institution> list = new ArrayList<Institution>();
-
 		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor cursor = db.query(TABLE_NAME, new String[] { KEY_ID,
-				KEY_NAME, KEY_CATEGORY, KEY_ADDRESS, KEY_PHONE, KEY_MAIL, KEY_WEB, KEY_DESC, KEY_IMAGE }, 
-				KEY_NAME + " LIKE '%"+like +"%'", null, null, null, KEY_NAME);
-		// looping through all rows and adding to list
+		String selectQuery = "SELECT  * FROM " + TABLE_NAME + " WHERE " + KEY_NAME + " LIKE '%"+like +"%' AND " + KEY_CATEGORY + " = '"+ category + "' ORDER BY " + KEY_NAME;
+		
+		Cursor cursor = db.rawQuery(selectQuery, null); 
+		
 		if (cursor.moveToFirst()) {
 			do {
 				Institution institution = new Institution();
@@ -164,9 +164,10 @@ public class DatabaseHandlerInstitution extends SQLiteOpenHelper {
 				// Adding contact to list
 				list.add(institution);
 			} while (cursor.moveToNext());
-		}	
+		}
 		return list;
 	}
+	
 	// Deleting single
 	public void delete(Institution institution) {
 		SQLiteDatabase db = this.getWritableDatabase();

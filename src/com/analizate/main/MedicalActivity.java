@@ -13,7 +13,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -40,7 +39,6 @@ import android.widget.Toast;
 import com.analizate.database.DatabaseHandlerDoctor;
 import com.analizate.database.Doctor;
 import com.analizate.database.Institution;
-import com.analizate.main.HospitalActivity.CustomList;
 import com.analizate.webservice.InternetDetector;
 import com.analizate.webservice.JSONParser;
 
@@ -109,7 +107,7 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 				textlength = edittext.getText().length();
 				text_sort.clear();
 				image_sort.clear();
-				for (int i = 0; i < text.length; i++) {
+				for (int i = 0; i < text.length; i++) {	
 					if (textlength <= text[i].length()) {
 						if (edittext.getText().toString().equalsIgnoreCase ( (String) text[i].subSequence(0,textlength))) {
 							text_sort.add(text[i]);
@@ -299,7 +297,7 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 		private class ViewHolder {
 			TextView customerId;
 			TextView txtName;
-			TextView txtSpeciality;
+			//TextView txtSpeciality;
 			TextView txtAddress;
 			ImageView img;
 		}
@@ -313,7 +311,7 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 				holder = new ViewHolder();
 				holder.customerId = (TextView) convertView.findViewById(R.id.customer_id);
 				holder.txtName = (TextView) convertView.findViewById(R.id.customerName);
-				holder.txtSpeciality = (TextView) convertView.findViewById(R.id.textSpeciality);
+				//holder.txtSpeciality = (TextView) convertView.findViewById(R.id.textSpeciality);
 				holder.txtAddress = (TextView) convertView.findViewById(R.id.customerAddress);
 				holder.img = (ImageView) convertView.findViewById(R.id.list_image);
 				convertView.setTag(holder);
@@ -322,46 +320,36 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 				holder = (ViewHolder) convertView.getTag();
 			}	 
 			Doctor rowItem = (Doctor) getItem(position);
-			
-			Log.d("CordovaLog", rowItem.getName());
-			Log.d("CordovaLog", rowItem.getImage() + "");
-			//Log.d("CordovaLog", rowItem.getName());
-			//Log.d("CordovaLog", rowItem.getID() + " -- " + rowItem.getSpecialtyName() + " -- " + rowItem.getPhone());
-			
 			holder.customerId.setText(String.valueOf(rowItem.getID()));
 			holder.txtName.setText(rowItem.getName());
-			holder.txtSpeciality.setText(rowItem.getSpecialtyName());
-			holder.txtAddress.setText(rowItem.getPhone() + ", " + rowItem.getCellPhone());
+			holder.txtAddress.setText(String.valueOf(rowItem.getAddress()));
 			
-			//Log.d("CordovaLog", "&&&&&&&&&&&&&&&&&&");
-			//Log.d("CordovaLog", rowItem.getImage());
-			/*
-			Log.d("CordovaLog", rowItem.getImage().toString());
+			Log.d("CordovaLog", rowItem.getImage() + " %%%%%%%%%%%%%%");
 			
-			if (!rowItem.getImage().toString().equals("null")){
-				Log.d("CordovaLog", "+++++++++++++++++++++--------------+++++++++++++++++++++++++");
+			/*if (!rowItem.getImage().toString().equals("null")){
+				Log.d("CordovaLog", rowItem.getImage() + " &&&&&&&&&&&");
 				byte[] decodedString = Base64.decode(rowItem.getImage(), Base64.DEFAULT);
 				Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
 				BitmapDrawable ob = new BitmapDrawable(decodedByte);
 				holder.img.setBackgroundDrawable(ob);
-			}else{
-				*///Log.d("CordovaLog", "*********************---------------************************");
-				holder.img.setImageResource(R.drawable.analizatelogo);
-			/*}*/
-			
+				
+			}*/
 			return convertView;
-		}	
-	}   
+		}
+	}
 
 	public class CustomList extends ArrayAdapter<String>{
 		private final Activity context;
 		private final String[] web;
 		private final String[] infoStr;
+		private final Integer[] imageId;
 		public CustomList(Activity context, String[] web, String[] info, Integer[] imageId) {
 			super(context, R.layout.row_info_hosp, web);
 			this.context = context;
 			this.web = web;
 			this.infoStr = info;
+			this.imageId = imageId;
 		}
 		@Override
 		public View getView(int position, View view, ViewGroup parent) {
@@ -372,6 +360,8 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 			txtTitle.setText(web[position]);
 			txtInfo.setText(infoStr[position]);
 			
+			Log.d("CordovaLog", "------------->>>> " + position);
+			Log.d("CordovaLog", "------------->>>> " + web[position]);
 			return rowView;
 		}
 	}

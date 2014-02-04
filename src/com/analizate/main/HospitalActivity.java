@@ -323,29 +323,32 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			holder.customerId.setText(String.valueOf(rowItem.getID()));
 			holder.txtName.setText(rowItem.getName());
 			holder.txtAddress.setText(String.valueOf(rowItem.getAddress()));
-			
+			//holder.img.setImageResource(R.drawable.analizatelogo);¡
 			if (!rowItem.getImage().toString().equals("null")){
+				Log.d("CordovaLog", "*****------------->>>> SIIII entro");
 				byte[] decodedString = Base64.decode(rowItem.getImage(), Base64.DEFAULT);
-				Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+				Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);																								
 				BitmapDrawable ob = new BitmapDrawable(decodedByte);
 				holder.img.setBackgroundDrawable(ob);
 			}else{
+				Log.d("CordovaLog", "*****------------->>>> NOOOOO entro");
 				holder.img.setImageResource(R.drawable.analizatelogo);
 			}
-			
 			return convertView;
 		}
-	}   
+	}
 
 	public class CustomList extends ArrayAdapter<String>{
 		private final Activity context;
 		private final String[] web;
 		private final String[] infoStr;
+		private final Integer[] imageId;
 		public CustomList(Activity context, String[] web, String[] info, Integer[] imageId) {
 			super(context, R.layout.row_info_hosp, web);
 			this.context = context;
 			this.web = web;
 			this.infoStr = info;
+			this.imageId = imageId;
 		}
 		@Override
 		public View getView(int position, View view, ViewGroup parent) {
@@ -355,6 +358,9 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			TextView txtInfo = (TextView) rowView.findViewById(R.id.current_desc);
 			txtTitle.setText(web[position]);
 			txtInfo.setText(infoStr[position]);
+			
+			Log.d("CordovaLog", "------------->>>> " + position);
+			Log.d("CordovaLog", "------------->>>> " + web[position]);
 			return rowView;
 		}
 	}

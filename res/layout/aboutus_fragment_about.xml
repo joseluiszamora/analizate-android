@@ -5,23 +5,14 @@
     android:background="@drawable/background"
     android:orientation="vertical"
      >
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingTop="7dp" >
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/analizateogo" />
-
+		
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,24 +20,18 @@
              >
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/textView2xxy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:textColor="#FFFFFF"
-                android:text="Laboratorios Analizate cuenta cón el personal profesional y la tecnologia apropiada para poder brindar un servicio rapido y preciso para brindar información oportuna."
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/txt2"
+                android:padding="5dp"
+                android:textColor="#040404"
+                android:textSize="16dp" />
             
         </RelativeLayout>
-
+        
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_marginTop="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/kol" />
 
 </LinearLayout>

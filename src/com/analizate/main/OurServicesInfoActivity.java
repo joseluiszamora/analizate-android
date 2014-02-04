@@ -32,7 +32,7 @@ public class OurServicesInfoActivity extends Activity {
 	    // get this
 	    Service service = db.get(obj_id);
 	    // Define TextViews
-  		TextView name = (TextView)findViewById(R.id.textView2);
+  		TextView name = (TextView)findViewById(R.id.textView2xxy);
   		name.setText(service.getName());
   		
 		final String[] title = { "" };

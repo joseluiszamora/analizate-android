@@ -15,34 +15,34 @@ public class AboutUsActivity extends TabActivity{
 		TabHost tabHost = getTabHost();
 		
 		// Tab for Project Sobre Nosotros
-        TabSpec infospec = tabHost.newTabSpec("Nosotros");
+        TabSpec infospec = tabHost.newTabSpec("Sobre Nosotros");
         // setting Title and Icon for the Tab
-        infospec.setIndicator("Nosotros", getResources().getDrawable(android.R.drawable.ic_menu_info_details));
+        infospec.setIndicator("Nosotros", getResources().getDrawable(android.R.drawable.ic_menu_myplaces));
         Intent infoIntent = new Intent(this, aboutAdapter.class);
 		infospec.setContent(infoIntent);
 		
         // Tab for Project Mision
-        TabSpec mapspec = tabHost.newTabSpec("Misión");
-        mapspec.setIndicator("Misión", getResources().getDrawable(android.R.drawable.ic_menu_mapmode));
+        TabSpec mapspec = tabHost.newTabSpec("Encuentranos");
+        mapspec.setIndicator("Encuentranos", getResources().getDrawable(android.R.drawable.ic_menu_mapmode));
         Intent mapIntentNew = new Intent(this, AboutMision.class);
         mapspec.setContent(mapIntentNew);
         
         // Tab for Project Vision
-        TabSpec visspec = tabHost.newTabSpec("Visión");
-        visspec.setIndicator("Visión", getResources().getDrawable(android.R.drawable.ic_dialog_info));
+        TabSpec visspec = tabHost.newTabSpec("Misión, Visión y Valores");
+        visspec.setIndicator("Misión y Visión", getResources().getDrawable(android.R.drawable.ic_menu_info_details));
         Intent visIntentNew = new Intent(this, AboutVision.class);
         visspec.setContent(visIntentNew);
         
-        // Tab for Project Valores
+        /*// Tab for Project Valores
         TabSpec valspec = tabHost.newTabSpec("Valores");
         valspec.setIndicator("Valores", getResources().getDrawable(android.R.drawable.ic_menu_help));
         Intent valIntentNew = new Intent(this, AboutValues.class);
-        valspec.setContent(valIntentNew);
+        valspec.setContent(valIntentNew);*/
 
         // Adding all TabSpec to TabHost
         tabHost.addTab(infospec);
         tabHost.addTab(mapspec);
         tabHost.addTab(visspec);
-        tabHost.addTab(valspec);
+        //tabHost.addTab(valspec);
 	}
 }

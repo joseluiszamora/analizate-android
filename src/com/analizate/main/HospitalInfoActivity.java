@@ -30,7 +30,7 @@ public class HospitalInfoActivity extends Activity {
 	    Institution institution = db.get(obj_id);
 	    
 	    // Define TextViews
-  		TextView name = (TextView)findViewById(R.id.textView2);
+  		TextView name = (TextView)findViewById(R.id.textView2xxy);
   				
   		name.setText(institution.getName());
   		
