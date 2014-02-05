@@ -337,8 +337,6 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 				//holder.img.setImageResource(R.drawable.analizatelogo);
 			}
 			
-			
-			
 			return convertView;
 		}
 	}
