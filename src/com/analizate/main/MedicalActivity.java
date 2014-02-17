@@ -89,7 +89,8 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 			toast.show();
         }
 		
-	    listView = (ListView) findViewById(R.id.contentlistclient);
+	    listView = (ListView) findViewById(R.id.contentlistclient);	
+	    listView.setDivider(getResources().getDrawable(android.R.color.transparent));
 	    edittext = (EditText) findViewById(R.id.textSearch);
 	    
 	    // set all Hospitals List
@@ -145,7 +146,7 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
     		String returnJson = jsonParser.makeHttpRequest("http://www.analizate.com.bo/api/v1/users/doctors.json", "GET", paramsx);
     		
     		try {
-    			Log.d("CordovaLog", "> " + returnJson.trim());
+    			//Log.d("CordovaLog", "> " + returnJson.trim());
     			if (!returnJson.trim().toString().equals(null)){
     				results = new JSONArray(returnJson);
         			if (results != null) {
@@ -162,7 +163,8 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
         					String specialty_name = c.getString("specialty_name");
         					String observations = c.getString("observations");
         					String avatar_base64 = c.getString("avatar_base64");
-        					db.add(new Doctor(1, specialty_name, name, email, phone, cellular, address, observations, avatar_base64));
+        					Doctor objDoc = new Doctor(1, specialty_name, name, email, phone, cellular, address, observations, avatar_base64); 
+        					db.add(objDoc);
         				}
         			}
     			}else{
@@ -248,6 +250,7 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 	    
   		CustomList adapter = new CustomList(MedicalActivity.this, title,  info, imageId);
   		ListView list = (ListView) dialog.findViewById(R.id.listinfo222);
+  		list.setDivider(getResources().getDrawable(android.R.color.transparent));
         list.setAdapter(adapter);
         
         dialog.show();
@@ -324,17 +327,18 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 			holder.txtName.setText(rowItem.getName());
 			holder.txtAddress.setText(String.valueOf(rowItem.getAddress()));
 			
-			Log.d("CordovaLog", rowItem.getImage() + " %%%%%%%%%%%%%%");
-			
-			/*if (!rowItem.getImage().toString().equals("null")){
-				Log.d("CordovaLog", rowItem.getImage() + " &&&&&&&&&&&");
-				byte[] decodedString = Base64.decode(rowItem.getImage(), Base64.DEFAULT);
-				Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+			holder.img.setBackgroundDrawable(null);
+			holder.img.setImageResource(0);
 
+			if (rowItem.getImage().toString().length() > 4) {
+				byte[] decodedString = Base64.decode(rowItem.getImage(), Base64.DEFAULT);
+				Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);																								
 				BitmapDrawable ob = new BitmapDrawable(decodedByte);
 				holder.img.setBackgroundDrawable(ob);
-				
-			}*/
+			} else {
+				holder.img.setImageResource(R.drawable.analizatelogo);
+			}
+			
 			return convertView;
 		}
 	}
@@ -351,6 +355,7 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 			this.infoStr = info;
 			this.imageId = imageId;
 		}
+		
 		@Override
 		public View getView(int position, View view, ViewGroup parent) {
 			LayoutInflater inflater = context.getLayoutInflater();

@@ -90,6 +90,7 @@ public class OurServicesActivity extends Activity implements OnItemClickListener
         }
 		
 		listView = (ListView) findViewById(R.id.contentlistclient);
+		listView.setDivider(getResources().getDrawable(android.R.color.transparent));
 	    edittext = (EditText) findViewById(R.id.textSearch);
 	    
 	    // set all Customers List

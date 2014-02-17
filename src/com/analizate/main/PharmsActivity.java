@@ -68,6 +68,7 @@ public class PharmsActivity extends Activity implements OnItemClickListener {
 		setContentView(R.layout.activity_pharms);
 
 		listView = (ListView) findViewById(R.id.listHospitals);
+		listView.setDivider(getResources().getDrawable(android.R.color.transparent));
 		edittext = (EditText) findViewById(R.id.textSearchHospitals);
 		db = new DatabaseHandlerInstitution(this, "", null, '1');
 
@@ -252,13 +253,18 @@ public class PharmsActivity extends Activity implements OnItemClickListener {
 			holder.customerId.setText(String.valueOf(rowItem.getID()));
 			holder.txtName.setText(rowItem.getName());
 			holder.txtAddress.setText(String.valueOf(rowItem.getAddress()));
-			byte[] decodedString = Base64.decode(rowItem.getImage(),
-					Base64.DEFAULT);
-			Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString,
-					0, decodedString.length);
-
-			BitmapDrawable ob = new BitmapDrawable(decodedByte);
-			holder.img.setBackgroundDrawable(ob);
+			
+			
+			holder.img.setBackgroundDrawable(null);
+			holder.img.setImageResource(0);
+			if (rowItem.getImage().toString().length() > 4) {
+				byte[] decodedString = Base64.decode(rowItem.getImage(), Base64.DEFAULT);
+				Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);																								
+				BitmapDrawable ob = new BitmapDrawable(decodedByte);
+				holder.img.setBackgroundDrawable(ob);
+			} else {
+				holder.img.setImageResource(R.drawable.analizatelogo);
+			}
 			return convertView;
 		}
 

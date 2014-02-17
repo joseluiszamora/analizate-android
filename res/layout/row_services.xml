@@ -12,8 +12,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="#FFFFFF"
-        android:padding="5dp"
+        android:background="@drawable/txt"
+        android:padding="1dp"
+        android:layout_marginTop="2dp"
         android:orientation="vertical" >
 
         <TextView
@@ -29,7 +30,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:text="Rihanna Love the way lie"
-            android:textColor="#040404"
+            android:textColor="#343434"
             android:textSize="15dip"
             android:textStyle="bold"
             android:typeface="sans" />

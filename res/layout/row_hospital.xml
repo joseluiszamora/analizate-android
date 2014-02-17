@@ -3,7 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@drawable/txt"
     android:paddingLeft="10dp"
     android:paddingRight="10dp" >
 
@@ -14,7 +13,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/txt"
-        android:padding="5dp"
+        android:padding="1dp"
+        android:layout_marginTop="2dp"
         android:orientation="vertical" >
 
         <TextView
@@ -27,7 +27,6 @@
             android:id="@+id/thumbnail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/image_bg"
             android:padding="3dip" >
 
             <ImageView

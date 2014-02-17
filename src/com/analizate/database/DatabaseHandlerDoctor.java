@@ -64,10 +64,7 @@ public class DatabaseHandlerDoctor extends SQLiteOpenHelper {
 	}
 	// Adding new product
 	public void add(Doctor doctor) {
-		Log.d("CordovaLog", "ADDDDDDDDDDDDDDDDDDDDDDDDDDD STARTTTTTT");
-		Log.d("CordovaLog", doctor.getName());
-		Log.d("CordovaLog", doctor.getImage());
-		Log.d("CordovaLog", "ADDDDDDDDDDDDDDDDDDDDDDDDDDD FINISHHHH");
+		//Log.d("CordovaLog", "INSERT DB::::::: " + doctor.getImage());
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(KEY_ID_ESPECIALTY, doctor.getIdEspeciality());
@@ -118,7 +115,7 @@ public class DatabaseHandlerDoctor extends SQLiteOpenHelper {
 				doctor.setCellPhone(cursor.getString(6));
 				doctor.setAddress(cursor.getString(7));
 				doctor.setObs(cursor.getString(8));
-				//doctor.setImage(cursor.getString(9));
+				doctor.setImage(cursor.getString(9));
 				// Adding contact to list
 				list.add(doctor);
 			} while (cursor.moveToNext());
@@ -164,7 +161,7 @@ public class DatabaseHandlerDoctor extends SQLiteOpenHelper {
 				doctor.setCellPhone(cursor.getString(6));
 				doctor.setAddress(cursor.getString(7));
 				doctor.setObs(cursor.getString(8));
-				//doctor.setImage(cursor.getString(9));
+				doctor.setImage(cursor.getString(9));
 				// Adding contact to list
 				list.add(doctor);
 			} while (cursor.moveToNext());

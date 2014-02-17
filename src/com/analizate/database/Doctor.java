@@ -32,7 +32,7 @@ public class Doctor {
 	}
   // constructor
   public Doctor(int id_especialty, String specialty_name, String name, String mail, String phone, String cellphone, String address, String obs, String image){
-    this._id_especialty = id_especialty;
+	this._id_especialty = id_especialty;
     this._name = name;
     this._specialty_name = specialty_name;
     this._mail = mail;
@@ -116,8 +116,7 @@ public class Doctor {
   }
   // getting image
   public String getImage(){
-	  //Log.d("CordovaLog", "QUOOOOOOOOOOOOOOOOOOOo");
-	  //Log.d("CordovaLog", "UUUUUUUUUUUUUUUU " + this._image);
+	 // Log.d("CordovaLog", "UUUUUUUUUUUUUUUU " + this._image);
 	  return this._image;
   }
   // setting image

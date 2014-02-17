@@ -13,7 +13,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -39,8 +38,6 @@ import android.widget.Toast;
 
 import com.analizate.database.DatabaseHandlerInstitution;
 import com.analizate.database.Institution;
-import com.analizate.database.Service;
-import com.analizate.main.OurServicesActivity.CustomList;
 import com.analizate.webservice.InternetDetector;
 import com.analizate.webservice.JSONParser;
 
@@ -68,15 +65,17 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 
 	ArrayList<String> text_sort = new ArrayList<String>();
 	ArrayList<Integer> image_sort = new ArrayList<Integer>();
+	CustomAdapterHospitals adapter;
 	
 	/** Called when the activity is first created. */
-	 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_hospital);
 		
 		listView = (ListView) findViewById(R.id.listHospitals);
+		listView.setDivider(getResources().getDrawable(android.R.color.transparent));
 		edittext = (EditText) findViewById(R.id.textSearchHospitals);
 		edittext.clearFocus();
 		db = new DatabaseHandlerInstitution(this, "", null, '1');
@@ -96,11 +95,11 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			Toast toast = Toast.makeText(HospitalActivity.this, "Conexión de datos no disponible", Toast.LENGTH_SHORT);
 			toast.show();
         }
-		
+	    
 	    // set all Hospitals List
 	    text = db.getAllNames("Hospitales");
 	    final List<Institution> rowItemsH = db.getAll("Hospitales");
-	    CustomAdapterHospitals adapter = new CustomAdapterHospitals(this, text, rowItemsH);
+	    adapter = new CustomAdapterHospitals(this, text, rowItemsH);
 	    listView.setAdapter(adapter);
 	    listView.setOnItemClickListener(this);
 
@@ -121,10 +120,8 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 					}
 				}
 				List<Institution> SearchRowItems = db.getAllSearch(edittext.getText().toString(), "Hospitales");
-				CustomAdapterHospitals adapter = new CustomAdapterHospitals(HospitalActivity.this, text_sort, SearchRowItems);
+				adapter = new CustomAdapterHospitals(HospitalActivity.this, text_sort, SearchRowItems);
 				listView.setAdapter(adapter);
-				
-				Log.d("log_tag", "Text Changed");
 			}
 		});
 	}
@@ -151,7 +148,6 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 		dialog.setContentView(R.layout.dialog_template);
 
 	    // get this
-		Log.d("CordovaLog", "======");
 		Log.d("CordovaLog", obj_id);
 		
 		Institution institution = db.get(obj_id);
@@ -181,41 +177,32 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 	            R.drawable.exit
 	    };
 	    
-  		CustomList adapter = new CustomList(HospitalActivity.this, title,  info, imageId);
+  		CustomList adapter2 = new CustomList(HospitalActivity.this, title,  info, imageId);
   		ListView list = (ListView) dialog.findViewById(R.id.listinfo222);
-        list.setAdapter(adapter);
+        list.setAdapter(adapter2);
         
         dialog.show();
 	}
-	
-
-	
 
 	private class UpdateInfoAsyncDialog extends AsyncTask<Void, Integer, Boolean> {
 		@Override
 		protected Boolean doInBackground(Void... params) {
-			
     		List<NameValuePair> paramsx = new ArrayList<NameValuePair>();
 			// Products JSONArray
 			JSONArray results = null;
-    		String returnJson = jsonParser.makeHttpRequest("http://www.analizate.com.bo/api/v1/institutions.json", 
-    						"GET", paramsx);
+    		String returnJson = jsonParser.makeHttpRequest("http://www.analizate.com.bo/api/v1/institutions.json", "GET", paramsx);
     		try {
-    			Log.d("log_tag", "> " + returnJson.trim());
-    			if (!returnJson.trim().toString().equals(null)){
-    				Log.d("log_tag", "Transaccion creada");
-    				
-    				results = new JSONArray(returnJson);
-        			if (results != null) {
-        				db.clearTable();
-        				// looping through All albums
-        				for (int i = 0; i < results.length(); i++) {					
-        					JSONObject c = results.getJSONObject(i);
-        				 	db.add(new Institution(c.getString("name"), c.getString("category"), c.getString("address"), c.getString("phone"), 
-        				 			c.getString("mail"), c.getString("web"), c.getString("desc"), c.getString("logo_base64")));
-        				}
-        			}
-    			}
+				if (!returnJson.trim().toString().equals(null)){
+					results = new JSONArray(returnJson);
+	    			if (results != null) {
+	    				db.clearTable();
+	    				for (int i = 0; i < results.length(); i++) {					
+	    					JSONObject c = results.getJSONObject(i);
+	    				 	db.add(new Institution(c.getString("name"), c.getString("category"), c.getString("address"), c.getString("phone"), 
+	    				 			c.getString("mail"), c.getString("web"), c.getString("desc"), c.getString("logo_base64")));
+	    				}
+	    			}
+				}
     		}
     		catch (Exception e) {}
     		
@@ -227,7 +214,6 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			int progreso = values[0].intValue();
 			pDialog.setProgress(progreso);
 		}
-		
 		@Override
 		protected void onPreExecute() {
 			pDialog.setOnCancelListener(new OnCancelListener() {
@@ -239,13 +225,12 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			pDialog.setProgress(0);
 			pDialog.show();
 		}
-		
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if(result) {
 			    text = db.getAllNames("Hospitales");
 			    final List<Institution> rowItemsH = db.getAll("Hospitales");
-			    CustomAdapterHospitals adapter = new CustomAdapterHospitals(HospitalActivity.this, text, rowItemsH);
+			    adapter = new CustomAdapterHospitals(HospitalActivity.this, text, rowItemsH);
 			    listView.setAdapter(adapter);
 			    listView.setOnItemClickListener(HospitalActivity.this);
 				pDialog.dismiss();
@@ -324,35 +309,36 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			holder.txtName.setText(rowItem.getName());
 			holder.txtAddress.setText(String.valueOf(rowItem.getAddress()));
 			
-			
-			//holder.img.setImageResource(R.drawable.analizatelogo);
-			if (!rowItem.getImage().toString().equals("null")){
-				Log.d("CordovaLog", "*****------------->>>> SIIII entro");
+			holder.img.setBackgroundDrawable(null);
+			holder.img.setImageResource(0);
+			if (rowItem.getImage().toString().length() > 4) {
 				byte[] decodedString = Base64.decode(rowItem.getImage(), Base64.DEFAULT);
 				Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);																								
 				BitmapDrawable ob = new BitmapDrawable(decodedByte);
 				holder.img.setBackgroundDrawable(ob);
-			}else{
-				Log.d("CordovaLog", "*****------------->>>> NOOOOO entro");
-				//holder.img.setImageResource(R.drawable.analizatelogo);
+			} else {
+				holder.img.setImageResource(R.drawable.analizatelogo);
 			}
 			
 			return convertView;
 		}
 	}
+	
+	
 
 	public class CustomList extends ArrayAdapter<String>{
 		private final Activity context;
 		private final String[] web;
 		private final String[] infoStr;
-		private final Integer[] imageId;
+		//private final Integer[] imageId;
 		public CustomList(Activity context, String[] web, String[] info, Integer[] imageId) {
 			super(context, R.layout.row_info_hosp, web);
 			this.context = context;
 			this.web = web;
 			this.infoStr = info;
-			this.imageId = imageId;
+			//this.imageId = imageId;
 		}
+		
 		@Override
 		public View getView(int position, View view, ViewGroup parent) {
 			LayoutInflater inflater = context.getLayoutInflater();
@@ -361,9 +347,6 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			TextView txtInfo = (TextView) rowView.findViewById(R.id.current_desc);
 			txtTitle.setText(web[position]);
 			txtInfo.setText(infoStr[position]);
-			
-			Log.d("CordovaLog", "------------->>>> " + position);
-			Log.d("CordovaLog", "------------->>>> " + web[position]);
 			return rowView;
 		}
 	}
