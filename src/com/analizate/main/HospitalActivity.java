@@ -323,8 +323,6 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			return convertView;
 		}
 	}
-	
-	
 
 	public class CustomList extends ArrayAdapter<String>{
 		private final Activity context;
