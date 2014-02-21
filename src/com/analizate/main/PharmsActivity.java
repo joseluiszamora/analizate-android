@@ -151,7 +151,8 @@ public class PharmsActivity extends Activity implements OnItemClickListener {
 		    "Telefono",
 		    "Mail",
 		    "Web",
-		    "Desc"
+		    "",
+		    ""
 		};
 
   		final String[] info = {
@@ -159,10 +160,12 @@ public class PharmsActivity extends Activity implements OnItemClickListener {
 	        institution.getPhone(),
 	        institution.getMail(),
 	        institution.getWeb(),
-	        institution.getDesc()
+	        institution.getDesc(),
+	        institution.getImage()
 	    };
   	  	  
 	    Integer[] imageId = {
+	            R.drawable.exit,
 	            R.drawable.exit,
 	            R.drawable.exit,
 	            R.drawable.exit,
@@ -289,11 +292,25 @@ public class PharmsActivity extends Activity implements OnItemClickListener {
 			View rowView= inflater.inflate(R.layout.row_info_hosp, null, true);
 			TextView txtTitle = (TextView) rowView.findViewById(R.id.current_title);
 			TextView txtInfo = (TextView) rowView.findViewById(R.id.current_desc);
-			txtTitle.setText(web[position]);
-			txtInfo.setText(infoStr[position]);
+			ImageView image = (ImageView) rowView.findViewById(R.id.imageView1);
 			
-			Log.d("CordovaLog", "------------->>>> " + position);
-			Log.d("CordovaLog", "------------->>>> " + web[position]);
+			Log.d("CordovaLog", "NEW POSITION ------->> " + position);
+			Log.d("CordovaLog", "NEW WEB POSITION ------->> " + web[position]);
+			
+			/*if (position == 5) {
+				if (infoStr[position].length() > 4) {
+					byte[] decodedString = Base64.decode(infoStr[position], Base64.DEFAULT);
+					Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);																								
+					BitmapDrawable ob = new BitmapDrawable(decodedByte);
+					image.setBackgroundDrawable(ob);
+				} else {
+					image.setImageResource(R.drawable.analizatelogo);
+				}
+			}else{*/
+				txtTitle.setText(web[position]);
+				txtInfo.setText(infoStr[position]);
+			//}
+			
 			return rowView;
 		}
 	}

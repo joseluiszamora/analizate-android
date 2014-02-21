@@ -250,7 +250,6 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 	    
   		CustomList adapter = new CustomList(MedicalActivity.this, title,  info, imageId);
   		ListView list = (ListView) dialog.findViewById(R.id.listinfo222);
-  		list.setDivider(getResources().getDrawable(android.R.color.transparent));
         list.setAdapter(adapter);
         
         dialog.show();
