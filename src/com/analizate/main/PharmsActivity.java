@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
@@ -36,21 +37,15 @@ import com.analizate.webservice.InternetDetector;
 import com.analizate.webservice.JSONParser;
 
 public class PharmsActivity extends Activity implements OnItemClickListener {
-	// Progress Dialog
 	private ProgressDialog pDialog;
-
-	// Creating JSON Parser object
 	JSONParser jsonParser = new JSONParser();
-
 	// internet object
 	InternetDetector internet;
 
-	/** Called when the activity is first created. */
 	DatabaseHandlerInstitution db;
 
 	ListView listView;
 	List<Institution> rowItems;
-
 	// search functionality
 	EditText edittext;
 	ListView listview;
@@ -59,8 +54,6 @@ public class PharmsActivity extends Activity implements OnItemClickListener {
 
 	ArrayList<String> text_sort = new ArrayList<String>();
 	ArrayList<Integer> image_sort = new ArrayList<Integer>();
-
-	/** Called when the activity is first created. */
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -147,25 +140,22 @@ public class PharmsActivity extends Activity implements OnItemClickListener {
 		
 		dialog.setTitle(name);
 		final String[] title = {
+		    "",
 		    "Dirección",
 		    "Telefono",
 		    "Mail",
-		    "Web",
-		    "",
-		    ""
+		    "Web"
 		};
 
   		final String[] info = {
+  			institution.getDesc(),
 	        institution.getAddress(),
 	        institution.getPhone(),
 	        institution.getMail(),
-	        institution.getWeb(),
-	        institution.getDesc(),
-	        institution.getImage()
+	        institution.getWeb()
 	    };
   	  	  
 	    Integer[] imageId = {
-	            R.drawable.exit,
 	            R.drawable.exit,
 	            R.drawable.exit,
 	            R.drawable.exit,
@@ -176,6 +166,16 @@ public class PharmsActivity extends Activity implements OnItemClickListener {
   		CustomList adapter = new CustomList(PharmsActivity.this, title,  info, imageId);
   		ListView list = (ListView) dialog.findViewById(R.id.listinfo222);
         list.setAdapter(adapter);
+        
+        String imgx = db.getImage(obj_id);
+        ImageView image = (ImageView) dialog.findViewById(R.id.imageView11x1);
+		
+		if ( !imgx.equals(null) ) {
+			byte[] decodedString = Base64.decode(imgx, Base64.DEFAULT);
+			Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);																								
+			BitmapDrawable ob = new BitmapDrawable(decodedByte);
+			image.setBackgroundDrawable(ob);
+		}
         
         dialog.show();
 	}
@@ -273,7 +273,6 @@ public class PharmsActivity extends Activity implements OnItemClickListener {
 
 	}
 	
-	
 	public class CustomList extends ArrayAdapter<String>{
 		private final Activity context;
 		private final String[] web;
@@ -292,24 +291,9 @@ public class PharmsActivity extends Activity implements OnItemClickListener {
 			View rowView= inflater.inflate(R.layout.row_info_hosp, null, true);
 			TextView txtTitle = (TextView) rowView.findViewById(R.id.current_title);
 			TextView txtInfo = (TextView) rowView.findViewById(R.id.current_desc);
-			ImageView image = (ImageView) rowView.findViewById(R.id.imageView1);
+			txtTitle.setText(Html.fromHtml(web[position]));
+			txtInfo.setText(Html.fromHtml(infoStr[position]));
 			
-			Log.d("CordovaLog", "NEW POSITION ------->> " + position);
-			Log.d("CordovaLog", "NEW WEB POSITION ------->> " + web[position]);
-			
-			/*if (position == 5) {
-				if (infoStr[position].length() > 4) {
-					byte[] decodedString = Base64.decode(infoStr[position], Base64.DEFAULT);
-					Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);																								
-					BitmapDrawable ob = new BitmapDrawable(decodedByte);
-					image.setBackgroundDrawable(ob);
-				} else {
-					image.setImageResource(R.drawable.analizatelogo);
-				}
-			}else{*/
-				txtTitle.setText(web[position]);
-				txtInfo.setText(infoStr[position]);
-			//}
 			
 			return rowView;
 		}

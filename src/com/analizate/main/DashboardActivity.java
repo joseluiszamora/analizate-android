@@ -1,12 +1,16 @@
 package com.analizate.main;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class DashboardActivity extends Activity{
 	@Override
@@ -65,8 +69,31 @@ public class DashboardActivity extends Activity{
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.txtInfo:
+			// custom dialog
+			final Dialog dialog = new Dialog(DashboardActivity.this, R.style.cust_dialog);
+			dialog.setContentView(R.layout.dialog_template_2);
+		    // get this
+		    String name = "Acerca de: ";
+		    String desc = "<h2>Laboratorios Analizate version 1.0 </h2> La Paz, Bolivia 2014  <br><br> Desarrollado por: <h4>hanadevel.com</h4>";
+			
+			dialog.setTitle(name);
+			final String[] title = { name };
+	  		final String[] info = { desc };
+	  		Integer[] imageId = { R.drawable.btn_moreinfo };
+	  		TextView textview = (TextView) dialog.findViewById(R.id.textViewDialog2);
+	  		textview.setText(Html.fromHtml(desc));
+	  		dialog.show();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}	
 	}
 }

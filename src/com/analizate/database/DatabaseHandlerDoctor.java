@@ -95,6 +95,16 @@ public class DatabaseHandlerDoctor extends SQLiteOpenHelper {
 		}else{ return null; }
 	}
 	
+	public String getImage(String id) {
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.query(TABLE_NAME, new String[] { KEY_IMAGE }, KEY_ID + "=?", new String[] { id }, null, null, null, null);
+		if (cursor != null && cursor.moveToFirst()){
+			return cursor.getString(0);
+		}else{
+			return null;
+		}
+	}
+	
 	// Getting All
 	public List<Doctor> getAll() {
 		List<Doctor> list = new ArrayList<Doctor>();

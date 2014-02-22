@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Analizate</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Información</string>
     <string name="email">Email</string>
     <string name="UserName">Nombre de Usuario</string>
     <string name="password">Contraseña</string>

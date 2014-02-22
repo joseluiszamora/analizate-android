@@ -19,6 +19,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
@@ -137,12 +138,6 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		String obj_id = (String) ((TextView) arg1.findViewById(R.id.customer_id)).getText();
 		
-        /*Intent intentNewProduct = new Intent(this, HospitalInfoActivity.class);
-		Bundle bundle = new Bundle();
-		bundle.putString("obj_id", obj_id);
-		intentNewProduct.putExtras(bundle);
-		startActivity(intentNewProduct);*/
-		
 		// custom dialog
 		final Dialog dialog = new Dialog(HospitalActivity.this, R.style.cust_dialog);
 		dialog.setContentView(R.layout.dialog_template);
@@ -154,33 +149,43 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 	    dialog.setTitle(institution.getName());
 	    
 	    final String[] title = {
-		    "Dirección",
-		    "Telefono",
-		    "Mail",
-		    "Web",
-		    "Desc"
-		};
+			    "",
+			    "Dirección",
+			    "Telefono",
+			    "Mail",
+			    "Web"
+			};
 
-  		final String[] info = {
-	        institution.getAddress(),
-	        institution.getPhone(),
-	        institution.getMail(),
-	        institution.getWeb(),
-	        institution.getDesc()
-	    };
-  	  	  
-	    Integer[] imageId = {
-	            R.drawable.exit,
-	            R.drawable.exit,
-	            R.drawable.exit,
-	            R.drawable.exit,
-	            R.drawable.exit
-	    };
+	  		final String[] info = {
+	  			institution.getDesc(),
+		        institution.getAddress(),
+		        institution.getPhone(),
+		        institution.getMail(),
+		        institution.getWeb()
+		    };
+	  	  	  
+		    Integer[] imageId = {
+		            R.drawable.exit,
+		            R.drawable.exit,
+		            R.drawable.exit,
+		            R.drawable.exit,
+		            R.drawable.exit
+		    };
 	    
   		CustomList adapter2 = new CustomList(HospitalActivity.this, title,  info, imageId);
   		ListView list = (ListView) dialog.findViewById(R.id.listinfo222);
         list.setAdapter(adapter2);
         
+        String imgx = db.getImage(obj_id);
+        ImageView image = (ImageView) dialog.findViewById(R.id.imageView11x1);
+		
+		if ( !imgx.equals(null) ) {
+			byte[] decodedString = Base64.decode(imgx, Base64.DEFAULT);
+			Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);																								
+			BitmapDrawable ob = new BitmapDrawable(decodedByte);
+			image.setBackgroundDrawable(ob);
+		}
+		
         dialog.show();
 	}
 
@@ -343,8 +348,8 @@ public class HospitalActivity extends Activity implements OnItemClickListener {
 			View rowView= inflater.inflate(R.layout.row_info_hosp, null, true);
 			TextView txtTitle = (TextView) rowView.findViewById(R.id.current_title);
 			TextView txtInfo = (TextView) rowView.findViewById(R.id.current_desc);
-			txtTitle.setText(web[position]);
-			txtInfo.setText(infoStr[position]);
+			txtTitle.setText(Html.fromHtml(web[position]));
+			txtInfo.setText(Html.fromHtml(infoStr[position]));
 			return rowView;
 		}
 	}

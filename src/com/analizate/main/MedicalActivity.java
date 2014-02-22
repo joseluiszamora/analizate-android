@@ -19,6 +19,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
@@ -225,18 +226,18 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 	    dialog.setTitle(doctor.getName());
 	    
 	    final String[] title = {
+    		"",
 		    "Dirección",
 		    "Telefono",
 		    "Mail",
-		    "Web",
-		    "Desc"
+		    "Contacto"
 		};
 
   		final String[] info = {
+  			doctor.getSpecialtyName(),
   			doctor.getAddress(),
   			doctor.getPhone(),
   			doctor.getMail(),
-  			doctor.getSpecialtyName(),
   			doctor.getCellPhone()
 	    };
   	  	  
@@ -252,6 +253,16 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
   		ListView list = (ListView) dialog.findViewById(R.id.listinfo222);
         list.setAdapter(adapter);
         
+        String imgx = db.getImage(obj_id);
+        ImageView image = (ImageView) dialog.findViewById(R.id.imageView11x1);
+		
+		if ( !imgx.equals(null) ) {
+			byte[] decodedString = Base64.decode(imgx, Base64.DEFAULT);
+			Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);																								
+			BitmapDrawable ob = new BitmapDrawable(decodedByte);
+			image.setBackgroundDrawable(ob);
+		}
+		
         dialog.show();
 	}
 	
@@ -361,11 +372,8 @@ public class MedicalActivity extends Activity implements OnItemClickListener{
 			View rowView= inflater.inflate(R.layout.row_info_hosp, null, true);
 			TextView txtTitle = (TextView) rowView.findViewById(R.id.current_title);
 			TextView txtInfo = (TextView) rowView.findViewById(R.id.current_desc);
-			txtTitle.setText(web[position]);
-			txtInfo.setText(infoStr[position]);
-			
-			Log.d("CordovaLog", "------------->>>> " + position);
-			Log.d("CordovaLog", "------------->>>> " + web[position]);
+			txtTitle.setText(Html.fromHtml(web[position]));
+			txtInfo.setText(Html.fromHtml(infoStr[position]));
 			return rowView;
 		}
 	}
